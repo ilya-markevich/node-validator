@@ -17,7 +17,7 @@ describe('Validator', () => {
   });
 
   describe('#property', () => {
-    it('should create state for property', sinon.test(() => {
+    it('should create state for property', () => {
       const { objectToValidate, path, mockStateReturn } = testData;
       const validator = new Validator(objectToValidate);
 
@@ -25,7 +25,7 @@ describe('Validator', () => {
 
       validator.property(path).should.be.eql(mockStateReturn);
       validator.StateConstructor.verify();
-    }));
+    });
   });
 
   describe('#extend', () => {
@@ -53,7 +53,7 @@ describe('Validator', () => {
       }
     });
 
-    it('should extend validator without custom getErrorMessage implementation', sinon.test(() => {
+    it('should extend validator without custom getErrorMessage implementation', () => {
       const { objectToValidate, customValidatorName } = testData;
       const validatorWithoutCustomErrorMethod = {
         [customValidatorName]: {
@@ -67,7 +67,7 @@ describe('Validator', () => {
 
       validator.StateConstructor.prototype.should.have.property(customValidatorName);
       (typeof validator.StateConstructor.prototype.isTest === 'function').should.be.eql(true);
-    }));
+    });
   });
 
   describe('#hasErrors', () => {

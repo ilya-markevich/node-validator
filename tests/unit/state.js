@@ -72,7 +72,7 @@ describe('Validator state', () => {
 
   describe('Static methods', () => {
     describe('#applyFieldValidator', () => {
-      it('should apply field validator', sinon.test(() => {
+      it('should apply field validator', () => {
         const { path, value, newValidatorName, newValidatorOpts, newValidatorResult } = testData;
         const state = new ValidatorState(path, value);
         const validator = {
@@ -86,9 +86,9 @@ describe('Validator state', () => {
         state.checks.should.have.length(1);
         state.checks[0].should.be.eql(newValidatorResult);
         validator.check.verify();
-      }));
+      });
 
-      it('should apply field validator with optional setting', sinon.test(() => {
+      it('should apply field validator with optional setting', () => {
         const { path, emptyValue, newValidatorName, newValidatorOpts } = testData;
         const state = new ValidatorState(path, emptyValue);
         const validator = {
@@ -102,7 +102,7 @@ describe('Validator state', () => {
 
         state.checks.should.have.length(0);
         validator.check.verify();
-      }));
+      });
     });
   });
 });

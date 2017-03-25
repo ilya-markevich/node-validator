@@ -20,7 +20,7 @@ describe('Base Field Validator', () => {
   });
 
   describe('#check', () => {
-    it('should check and return that value is incorrect', sinon.test(() => {
+    it('should check and return that value is incorrect', () => {
       const {
         name, defaultOpts, value, opts, appliedDefaultOpts, errorMessage, expectedIncorrectCheckResult
       } = testData;
@@ -31,9 +31,9 @@ describe('Base Field Validator', () => {
 
       validator.check(value, opts).should.have.properties(expectedIncorrectCheckResult);
       validator.getErrorMessage.verify();
-    }));
+    });
 
-    it('should check and return that value is correct', sinon.test(() => {
+    it('should check and return that value is correct', () => {
       const {
         name, defaultOpts, value, opts, appliedDefaultOpts, expectedCorrectCheckResult
       } = testData;
@@ -44,6 +44,6 @@ describe('Base Field Validator', () => {
 
       validator.check(value, opts).should.have.properties(expectedCorrectCheckResult);
       validator.getErrorMessage.verify();
-    }));
+    });
   });
 });
