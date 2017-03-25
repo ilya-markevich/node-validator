@@ -9,30 +9,35 @@ class Validator {
   constructor(objToValidate) {
     this.objToValidate = objToValidate;
     this.states = [];
+
+    this.StateConstructor = State;
+    this.FieldValidatorConstructor = BaseFieldValidator;
   }
 
   property(path) {
-    const { objToValidate, states } = this;
-    const state = new State(path, get(objToValidate, path));
+    const { objToValidate, states, StateConstructor } = this;
+    const state = new StateConstructor(path, get(objToValidate, path));
 
     states.push(state);
     return state;
   }
 
   extend(objWithMethods = {}) {
-    Object.values(objWithMethods).forEach(this._checkCustomValidator);
+    const self = this;
+
+    Object.keys(objWithMethods).forEach(methodName => self._checkCustomValidator(objWithMethods[methodName]));
 
     Object.keys(objWithMethods).forEach((methodName) => {
       const customValidator = objWithMethods[methodName];
-      const fieldValidator = Object.create(BaseFieldValidator.prototype, {
+      const fieldValidator = Object.create(self.FieldValidatorConstructor.prototype, {
         name: {
           value: methodName
         },
         defaultOpts: {
           value: Object(customValidator.defaultOpts)
         },
-        apply: {
-          value: customValidator.apply
+        execute: {
+          value: customValidator.execute
         },
         getErrorMessage: {
           value: customValidator.getErrorMessage || function () {
@@ -41,7 +46,7 @@ class Validator {
         }
       });
 
-      ValidityState.applyFieldValidator(fieldValidator);
+      self.StateConstructor.applyFieldValidator(fieldValidator);
     });
   }
 
@@ -59,8 +64,12 @@ class Validator {
   }
 
   _checkCustomValidator(validator) {
-    if (typeof validator.apply !== 'function') {
-      throw new Error('"apply" property should be function.');
+    if (typeof validator.execute !== 'function') {
+      throw new Error('"execute" property should be function.');
+    }
+
+    if (validator.getErrorMessage && typeof validator.getErrorMessage !== 'function') {
+      throw new Error('"getErrorMessage" property should be function.');
     }
   }
 }

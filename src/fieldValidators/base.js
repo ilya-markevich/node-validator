@@ -10,7 +10,7 @@ class BaseFieldValidator {
     const self = this;
     const options = Object.assign({}, self.defaultOpts, opts);
 
-    const isCorrect = self.apply(value, options);
+    const isCorrect = self.execute(value, options);
     const result = {
       isCorrect
     };

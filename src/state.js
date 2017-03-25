@@ -13,11 +13,17 @@ class ValidationState {
   }
 
   optional() {
-    this.isOptional = true;
+    const self = this;
+
+    self.isOptional = true;
+    return self;
   }
 
   withMessage(message) {
-    this.customMessage = message;
+    const self = this;
+
+    self.customMessage = message;
+    return self;
   }
 
   getInfo() {
@@ -26,7 +32,7 @@ class ValidationState {
     const result = {
       path,
       value,
-      isCorrect: incorrectChecks.length > 0,
+      isCorrect: incorrectChecks.length === 0,
       errorMessage: null
     };
 
@@ -40,14 +46,16 @@ class ValidationState {
   }
 
   static applyFieldValidator(fieldValidator) {
-    ValidationState.prototype[fieldValidator.name] = function (value, opts) {
+    ValidationState.prototype[fieldValidator.name] = function (opts) {
       const self = this;
 
-      if (self.isOptional && (value === null || value === undefined)) {
+      if (self.isOptional && (self.value === null || self.value === undefined)) {
         self.checks = [];
       } else {
-        self.checks.push(fieldValidator.check(value, opts));
+        self.checks.push(fieldValidator.check(self.value, opts));
       }
+
+      return self;
     };
   }
 }

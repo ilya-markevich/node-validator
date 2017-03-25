@@ -9,7 +9,7 @@ class IsNumber extends BaseFieldValidator {
     });
   }
 
-  apply(value, opts) {
+  execute(value, opts) {
     const { min, max } = opts;
 
     if (typeof value === 'number') {
