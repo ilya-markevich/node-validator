@@ -1,0 +1,5 @@
+tests
+.nyc_output
+coverage
+.idea
+npm-debug.log
