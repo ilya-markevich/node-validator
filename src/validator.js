@@ -22,12 +22,12 @@ class Validator {
     return state;
   }
 
-  extend(objWithMethods = {}) {
+  extend(objWithMethods) {
     const self = this;
 
-    Object.keys(objWithMethods).forEach(methodName => self._checkCustomValidator(objWithMethods[methodName]));
+    Object.keys(Object(objWithMethods)).forEach(methodName => self._checkCustomValidator(objWithMethods[methodName]));
 
-    Object.keys(objWithMethods).forEach((methodName) => {
+    Object.keys(Object(objWithMethods)).forEach((methodName) => {
       const customValidator = objWithMethods[methodName];
       const fieldValidator = Object.create(self.FieldValidatorConstructor.prototype, {
         name: {
