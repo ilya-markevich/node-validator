@@ -19,6 +19,8 @@ class IsNumber extends BaseFieldValidator {
         return value >= min;
       } else if (Number.isInteger(max)) {
         return value <= max;
+      } else {
+        return true;
       }
     } else {
       return false;
