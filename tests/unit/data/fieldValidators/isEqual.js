@@ -13,10 +13,10 @@ const executeTestCases = [
 ];
 
 const errorMessageTestCases = [
-  generateErrorMessageData('should be eql 2', 2),
-  generateErrorMessageData('should be eql null', null),
-  generateErrorMessageData('should be eql undefined', undefined),
-  generateErrorMessageData('should be eql 0', 0)
+  generateErrorMessageData('should be equal 2', 2),
+  generateErrorMessageData('should be equal null', null),
+  generateErrorMessageData('should be equal undefined', undefined),
+  generateErrorMessageData('should be equal 0', 0)
 ];
 
 module.exports = {

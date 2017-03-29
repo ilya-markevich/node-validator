@@ -12,7 +12,7 @@ class IsBoolean extends BaseFieldValidator {
   }
 
   getErrorMessage() {
-    return 'should be boolean';
+    return 'should be a boolean';
   }
 }
 

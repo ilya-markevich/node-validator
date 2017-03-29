@@ -33,6 +33,34 @@ class BaseFieldValidator {
       return opts || defaultOpts;
     }
   }
+
+  _getRangeExecution(opts, value, conditionFunc = value => value) {
+    const { min, max } = opts;
+
+    if (conditionFunc(min) && conditionFunc(max)) {
+      return value >= min && value <= max;
+    } else if (conditionFunc(min)) {
+      return value >= min;
+    } else if (conditionFunc(max)) {
+      return value <= max;
+    } else {
+      return true;
+    }
+  }
+
+  _getRangeErrorMessage(opts, conditionFunc = value => value) {
+    const { min, max } = opts;
+
+    if (conditionFunc(min) && conditionFunc(max)) {
+      return ` between ${min} and ${max}`;
+    } else if (conditionFunc(min)) {
+      return ` more than ${min}`;
+    } else if (conditionFunc(max)) {
+      return ` less than ${max}`;
+    } else {
+      return '';
+    }
+  }
 }
 
 module.exports = BaseFieldValidator;

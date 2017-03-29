@@ -10,36 +10,15 @@ class IsFloat extends BaseFieldValidator {
   }
 
   execute(value, opts) {
-    const { min, max } = opts;
-
     if (typeof value === 'number' && this.floatRegexp.test(value.toString())) {
-      if (Number.isFinite(min) && Number.isFinite(max)) {
-        return value >= min && value <= max;
-      } else if (Number.isFinite(min)) {
-        return value >= min;
-      } else if (Number.isFinite(max)) {
-        return value <= max;
-      } else {
-        return true;
-      }
+      return this._getRangeExecution(opts, value, Number.isFinite.bind(Number));
     } else {
       return false;
     }
   }
 
   getErrorMessage(opts) {
-    const { min, max } = opts;
-    let message = 'should be a float';
-
-    if (Number.isFinite(min) && Number.isFinite(max)) {
-      message = `${message} between ${min} and ${max}`;
-    } else if (Number.isFinite(min)) {
-      message = `${message} more than ${min}`;
-    } else if (Number.isFinite(max)) {
-      message = `${message} less than ${max}`;
-    }
-
-    return message;
+    return `should be a float${this._getRangeErrorMessage(opts, Number.isFinite.bind(Number))}`;
   }
 }
 

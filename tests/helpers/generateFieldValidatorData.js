@@ -15,7 +15,25 @@ function generateErrorMessageData(errorMessage, opts) {
   };
 }
 
+function generateIntegrationTestCase(validatorName, value, opts, errorMessage) {
+  return {
+    obj: {
+      test: value
+    },
+    validatorName,
+    opts: Object(opts),
+    errors: errorMessage ? [
+      {
+        path: 'test',
+        value,
+        errorMessage: `test ${errorMessage}`
+      }
+    ] : []
+  };
+}
+
 module.exports = {
   generateExecuteData,
-  generateErrorMessageData
+  generateErrorMessageData,
+  generateIntegrationTestCase
 };

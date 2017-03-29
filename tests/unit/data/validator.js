@@ -43,18 +43,6 @@ const validatorErrors = (() => {
   return [stateInfo];
 })();
 
-const incorrectApplyValidator = {
-  isTest: {}
-};
-const incorrectGetErrorMessageValidator = {
-  isTest: {
-    execute: value => value,
-    getErrorMessage: 'test'
-  }
-};
-
-const customValidatorName = 'isTest';
-
 module.exports = {
   objectToValidate,
   initialState,
@@ -62,8 +50,5 @@ module.exports = {
   mockStateReturn,
   stateWithError,
   stateWithoutError,
-  validatorErrors,
-  incorrectApplyValidator,
-  incorrectGetErrorMessageValidator,
-  customValidatorName
+  validatorErrors
 };

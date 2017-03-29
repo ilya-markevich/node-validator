@@ -7,7 +7,7 @@ const BaseFieldValidator = require('./base');
 
 class IsEmail extends BaseFieldValidator {
   constructor() {
-    super('isEmail', {});
+    super('isEmail');
   }
 
   execute(value) {

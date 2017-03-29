@@ -30,15 +30,15 @@ const executeTestCases = [
 ];
 
 const errorMessageTestCases = [
-  generateErrorMessageData('should be date', {}),
-  generateErrorMessageData('should be date between 01.01.2000 and 01.05.2000', {
+  generateErrorMessageData('should be a date', {}),
+  generateErrorMessageData('should be a date between 01.01.2000 and 01.05.2000', {
     after: '01.01.2000',
     before: '01.05.2000'
   }),
-  generateErrorMessageData('should be date more than 01.01.2000', {
+  generateErrorMessageData('should be a date more than 01.01.2000', {
     after: '01.01.2000'
   }),
-  generateErrorMessageData('should be date less than 01.05.2000', {
+  generateErrorMessageData('should be a date less than 01.05.2000', {
     before: '01.05.2000'
   })
 ];

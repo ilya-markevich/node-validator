@@ -12,7 +12,7 @@ class IsEqual extends BaseFieldValidator {
   }
 
   getErrorMessage(value) {
-    return `should be eql ${value}`;
+    return `should be equal ${value}`;
   }
 }
 

@@ -12,7 +12,7 @@ const executeTestCases = [
 ];
 
 const errorMessageTestCases = [
-  generateErrorMessageData('should be boolean')
+  generateErrorMessageData('should be a boolean')
 ];
 
 module.exports = {

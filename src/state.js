@@ -1,6 +1,7 @@
 'use strict';
 
-const applyFieldValidators = require('./fieldValidators');
+const fs = require('fs');
+const path = require('path');
 
 class ValidationState {
   constructor(path, value) {
@@ -58,8 +59,18 @@ class ValidationState {
       return self;
     };
   }
+
+  static _applyDefaultValidators() {
+    const fieldValidatorsPath = path.join(__dirname, 'fieldValidators');
+
+    fs.readdirSync(fieldValidatorsPath).filter(f => !f.startsWith('base')).forEach((fileName) => {
+      const fieldValidator = require(path.join(fieldValidatorsPath, fileName));
+
+      ValidationState.applyFieldValidator(fieldValidator);
+    });
+  }
 }
 
-applyFieldValidators(ValidationState);
+ValidationState._applyDefaultValidators();
 
 module.exports = ValidationState;

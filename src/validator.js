@@ -22,14 +22,25 @@ class Validator {
     return state;
   }
 
-  extend(objWithMethods) {
-    const self = this;
+  hasErrors() {
+    const errors = this.getErrors();
 
-    Object.keys(Object(objWithMethods)).forEach(methodName => self._checkCustomValidator(objWithMethods[methodName]));
+    return errors.length > 0;
+  }
+
+  getErrors() {
+    return this.states.map(state => state.getInfo()).filter(stateInfo => !stateInfo.isCorrect).map((stateInfo) => {
+      delete stateInfo.isCorrect;
+      return stateInfo;
+    });
+  }
+
+  static extend(objWithMethods) {
+    Object.keys(Object(objWithMethods)).forEach(methodName => Validator._checkCustomValidator(objWithMethods[methodName]));
 
     Object.keys(Object(objWithMethods)).forEach((methodName) => {
       const customValidator = objWithMethods[methodName];
-      const fieldValidator = Object.create(self.FieldValidatorConstructor.prototype, {
+      const fieldValidator = Object.create(BaseFieldValidator.prototype, {
         name: {
           value: methodName
         },
@@ -46,24 +57,11 @@ class Validator {
         }
       });
 
-      self.StateConstructor.applyFieldValidator(fieldValidator);
+      State.applyFieldValidator(fieldValidator);
     });
   }
 
-  hasErrors() {
-    const errors = this.getErrors();
-
-    return errors.length > 0;
-  }
-
-  getErrors() {
-    return this.states.map(state => state.getInfo()).filter(stateInfo => !stateInfo.isCorrect).map((stateInfo) => {
-      delete stateInfo.isCorrect;
-      return stateInfo;
-    });
-  }
-
-  _checkCustomValidator(validator) {
+  static _checkCustomValidator(validator) {
     if (typeof validator.execute !== 'function') {
       throw new Error('"execute" property should be function.');
     }
