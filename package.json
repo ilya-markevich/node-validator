@@ -29,7 +29,8 @@
     "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
-    "get-value": "^2.0.6"
+    "get-value": "^2.0.6",
+    "isemail": "^2.2.1"
   },
   "devDependencies": {
     "coveralls": "^2.12.0",

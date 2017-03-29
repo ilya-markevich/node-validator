@@ -2,9 +2,9 @@
 
 const BaseFieldValidator = require('./base');
 
-class IsNumber extends BaseFieldValidator {
+class IsArrayLength extends BaseFieldValidator {
   constructor() {
-    super('isInteger', {
+    super('isArrayLength', {
       min: 0
     });
   }
@@ -12,13 +12,15 @@ class IsNumber extends BaseFieldValidator {
   execute(value, opts) {
     const { min, max } = opts;
 
-    if (Number.isInteger(value)) {
+    if (Array.isArray(value)) {
+      const arrayLength = value.length;
+
       if (Number.isInteger(min) && Number.isInteger(max)) {
-        return value >= min && value <= max;
+        return arrayLength >= min && arrayLength <= max;
       } else if (Number.isInteger(min)) {
-        return value >= min;
+        return arrayLength >= min;
       } else if (Number.isInteger(max)) {
-        return value <= max;
+        return arrayLength <= max;
       } else {
         return true;
       }
@@ -29,7 +31,7 @@ class IsNumber extends BaseFieldValidator {
 
   getErrorMessage(opts) {
     const { min, max } = opts;
-    let message = 'should be an integer';
+    let message = 'should have length';
 
     if (Number.isInteger(min) && Number.isInteger(max)) {
       message = `${message} between ${min} and ${max}`;
@@ -43,4 +45,4 @@ class IsNumber extends BaseFieldValidator {
   }
 }
 
-module.exports = new IsNumber();
+module.exports = new IsArrayLength();

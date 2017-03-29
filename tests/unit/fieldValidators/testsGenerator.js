@@ -2,7 +2,9 @@
 
 function generateExecuteTests(validator, testCases) {
   testCases.forEach(({ isCorrect, value, opts }) => {
-    it(`should return ${isCorrect.toString()} for '${value}'`, () => {
+    const optsString = typeof opts === 'object' && !Array.isArray(opts) ? JSON.stringify(opts) : String(opts);
+
+    it(`should return ${isCorrect.toString()} for '${value}' with opts = ${optsString}`, () => {
       validator.execute(value, opts).should.be.eql(isCorrect);
     });
   });

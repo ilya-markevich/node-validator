@@ -46,13 +46,13 @@ class ValidationState {
   }
 
   static applyFieldValidator(fieldValidator) {
-    ValidationState.prototype[fieldValidator.name] = function (opts) {
+    ValidationState.prototype[fieldValidator.name] = function (...opts) {
       const self = this;
 
       if (self.isOptional && (self.value === null || self.value === undefined)) {
         self.checks = [];
       } else {
-        self.checks.push(fieldValidator.check(self.value, opts));
+        self.checks.push(fieldValidator.check(self.value, ...opts));
       }
 
       return self;

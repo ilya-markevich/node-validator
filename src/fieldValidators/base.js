@@ -8,7 +8,7 @@ class BaseFieldValidator {
 
   check(value, opts) {
     const self = this;
-    const options = Object.assign({}, self.defaultOpts, opts);
+    const options = self._getOptions(opts);
 
     const isCorrect = self.execute(value, options);
     const result = {
@@ -20,6 +20,18 @@ class BaseFieldValidator {
     }
 
     return result;
+  }
+
+  _getOptions(opts) {
+    const { defaultOpts } = this;
+    const type = Object.prototype.toString.call(opts).toLowerCase();
+    const objTypes = ['[object null]', '[object undefined]', '[object object]'];
+
+    if (objTypes.includes(type) && !Array.isArray(defaultOpts)) {
+      return Object.assign({}, defaultOpts, opts);
+    } else {
+      return opts || defaultOpts;
+    }
   }
 }
 
