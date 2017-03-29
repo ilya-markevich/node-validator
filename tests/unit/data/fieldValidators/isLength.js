@@ -5,6 +5,7 @@
 const { generateExecuteData, generateErrorMessageData } = require('../../../helpers/generateFieldValidatorData');
 
 const executeTestCases = [
+  generateExecuteData(false, null, {}),
   generateExecuteData(true, 'test', {}),
   generateExecuteData(true, 'test', {
     min: 1,
