@@ -2,13 +2,13 @@
 
 const BaseFieldValidator = require('./base');
 
-class IsEachEqual extends BaseFieldValidator {
+class IsEachIn extends BaseFieldValidator {
   constructor() {
     super('isEachIn', []);
   }
 
   execute(values, inArray) {
-    return values.reduce((result, value) => {
+    return Array.isArray(values) && values.reduce((result, value) => {
       return result && inArray.includes(value);
     }, true);
   }
@@ -18,4 +18,4 @@ class IsEachEqual extends BaseFieldValidator {
   }
 }
 
-module.exports = new IsEachEqual();
+module.exports = new IsEachIn();

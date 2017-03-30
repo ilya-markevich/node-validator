@@ -21,7 +21,7 @@ function generateIntegrationTestCase(validatorName, value, opts, errorMessage) {
       test: value
     },
     validatorName,
-    opts: Object(opts),
+    opts,
     errors: errorMessage ? [
       {
         path: 'test',

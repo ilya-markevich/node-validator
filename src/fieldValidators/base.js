@@ -25,12 +25,12 @@ class BaseFieldValidator {
   _getOptions(opts) {
     const { defaultOpts } = this;
     const type = Object.prototype.toString.call(opts).toLowerCase();
-    const objTypes = ['[object null]', '[object undefined]', '[object object]'];
+    const objTypes = ['[object object]'];
 
     if (objTypes.includes(type) && !Array.isArray(defaultOpts)) {
       return Object.assign({}, defaultOpts, opts);
     } else {
-      return opts || defaultOpts;
+      return opts !== null && opts !== undefined ? opts : defaultOpts;
     }
   }
 

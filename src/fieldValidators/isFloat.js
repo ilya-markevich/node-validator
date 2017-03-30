@@ -4,7 +4,9 @@ const BaseFieldValidator = require('./base');
 
 class IsFloat extends BaseFieldValidator {
   constructor() {
-    super('isFloat');
+    super('isFloat', {
+      min: 0
+    });
 
     this.floatRegexp = /^(?:[-+])?(?:[0-9]+)?(?:\.[0-9]*)?(?:[eE][+-]?(?:[0-9]+))?$/;
   }

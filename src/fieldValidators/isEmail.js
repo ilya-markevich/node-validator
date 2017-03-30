@@ -11,7 +11,7 @@ class IsEmail extends BaseFieldValidator {
   }
 
   execute(value) {
-    return isEmail.validate(value, {
+    return isEmail.validate(String(value), {
       errorLevel: false
     });
   }
