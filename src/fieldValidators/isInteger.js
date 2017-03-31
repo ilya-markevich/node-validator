@@ -12,6 +12,7 @@ class IsNumber extends BaseFieldValidator {
 
   _isStringIsInteger(str) {
     const number = Math.floor(Number(str));
+
     return String(number) === str;
   }
 
