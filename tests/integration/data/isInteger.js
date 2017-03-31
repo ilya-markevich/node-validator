@@ -7,6 +7,7 @@ const generateTest = require('../../helpers/generateFieldValidatorData').generat
 
 module.exports = [
   generateTest(1),
+  generateTest('1'),
   generateTest('test', null, 'should be an integer more than 0'),
   generateTest(2, {
     min: 1,

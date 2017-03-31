@@ -7,6 +7,7 @@ const generateTest = require('../../helpers/generateFieldValidatorData').generat
 
 module.exports = [
   generateTest(true),
+  generateTest('true'),
   generateTest('test', null, errorMessage),
   generateTest(null, null, errorMessage)
 ];

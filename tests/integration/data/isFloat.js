@@ -6,7 +6,8 @@ const validatorName = 'isFloat';
 const generateTest = require('../../helpers/generateFieldValidatorData').generateIntegrationTestCase.bind(null, validatorName);
 
 module.exports = [
-  generateTest(1),
+  generateTest(1.2),
+  generateTest('1.2'),
   generateTest('test', null, 'should be a float more than 0'),
   generateTest(1.2, {
     min: 2,

@@ -6,6 +6,9 @@ const { generateExecuteData, generateErrorMessageData } = require('../../../help
 
 const executeTestCases = [
   generateExecuteData(false, 'test', {}),
+  generateExecuteData(true, '1.25', {
+    convert: true
+  }),
   generateExecuteData(true, 8, {}),
   generateExecuteData(true, 8.0, {}),
   generateExecuteData(true, 10.5, {

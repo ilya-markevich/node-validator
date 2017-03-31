@@ -4,10 +4,16 @@ const BaseFieldValidator = require('./base');
 
 class IsBoolean extends BaseFieldValidator {
   constructor() {
-    super('isBoolean');
+    super('isBoolean', {
+      convert: true
+    });
   }
 
-  execute(value) {
+  execute(value, opts) {
+    if (opts.convert && typeof value === 'string') {
+      return value === 'true';
+    }
+
     return typeof value === 'boolean';
   }
 
