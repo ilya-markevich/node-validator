@@ -1,6 +1,6 @@
 # Dee Validator
 
-[![npm](https://img.shields.io/npm/v/dee-validator.svg?maxAge=1000)](https://www.npmjs.com/package/dee-validatorr)
+[![npm](https://img.shields.io/npm/v/dee-validator.svg?maxAge=1000)](https://www.npmjs.com/package/dee-validator)
 [![npm](https://img.shields.io/npm/dt/dee-validator.svg?maxAge=1000)](https://www.npmjs.com/package/dee-validator)
 [![Coverage Status](https://coveralls.io/repos/github/ilya-markevich/node-validator/badge.svg?branch=master)](https://coveralls.io/github/ilya-markevich/node-validator?branch=master)
 [![dependency Status](https://img.shields.io/david/ilya-markevich/node-validator.svg?maxAge=1000)](https://david-dm.org/ilya-markevich/node-validator)
