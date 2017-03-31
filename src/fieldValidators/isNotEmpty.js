@@ -8,7 +8,11 @@ class NotEmpty extends BaseFieldValidator {
   }
 
   execute(value) {
-    return typeof value === 'string' && value.length > 0;
+    if (typeof value === 'string') {
+      return value.length > 0;
+    } else {
+      return value !== undefined && value !== null;
+    }
   }
 
   getErrorMessage() {

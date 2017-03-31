@@ -6,27 +6,31 @@ const objectToValidate = {
   name: 'test name'
 };
 
-const value = 'test string';
-const emptyValue = undefined;
+const obj = {
+  test: 'test string'
+};
+const objWithEmptyValue = {
+  test: undefined
+};
 const customMessage = 'custom message';
 
 const initialState = {
   path,
-  value,
+  obj,
   isOptional: false,
   checks: [],
   customMessage: null
 };
 const stateAfterOptional = {
   path,
-  value,
+  obj,
   isOptional: true,
   checks: [],
   customMessage: null
 };
 const stateAfterCustomMessage = {
   path,
-  value,
+  obj,
   isOptional: false,
   checks: [],
   customMessage
@@ -34,7 +38,7 @@ const stateAfterCustomMessage = {
 
 const expectedInfoWithoutErrors = {
   path,
-  value,
+  value: obj[path],
   isCorrect: true,
   errorMessage: null
 };
@@ -44,14 +48,14 @@ const checkInfoWithError = {
 };
 const expectedInfoWithErrors = {
   path,
-  value,
+  value: obj[path],
   isCorrect: false,
   errorMessage: `${path} ${checkInfoWithError.errorMessage}`
 };
 
 const expectedInfoWithErrorsAndCustomMessage = {
   path,
-  value,
+  value: obj[path],
   isCorrect: false,
   errorMessage: customMessage
 };
@@ -65,8 +69,8 @@ const newValidatorResult = {
 
 module.exports = {
   path,
-  value,
-  emptyValue,
+  obj,
+  objWithEmptyValue,
   customMessage,
   objectToValidate,
   initialState,

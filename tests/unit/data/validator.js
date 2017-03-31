@@ -8,8 +8,8 @@ const objectToValidate = {
   name: 'test name'
 };
 const initialState = {
-  states: [],
-  objToValidate: objectToValidate,
+  _states: [],
+  _objToValidate: objectToValidate,
   StateConstructor,
   FieldValidatorConstructor
 };

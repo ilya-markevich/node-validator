@@ -7,7 +7,7 @@ const executeTestCases = [
   generateExecuteData(false, ''),
   generateExecuteData(false, null),
   generateExecuteData(false, undefined),
-  generateExecuteData(false, {}),
+  generateExecuteData(true, {}),
   generateExecuteData(true, '0')
 ];
 

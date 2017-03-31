@@ -3,22 +3,24 @@
 const State = require('./state');
 const BaseFieldValidator = require('./fieldValidators/base');
 
-const get = require('get-value');
-
 class Validator {
   constructor(objToValidate) {
-    this.objToValidate = objToValidate;
-    this.states = [];
+    this._objToValidate = objToValidate;
+    this._states = [];
 
     this.StateConstructor = State;
     this.FieldValidatorConstructor = BaseFieldValidator;
   }
 
-  property(path) {
-    const { objToValidate, states, StateConstructor } = this;
-    const state = new StateConstructor(path, get(objToValidate, path));
+  getValidationObject() {
+    return this._objToValidate;
+  }
 
-    states.push(state);
+  property(path) {
+    const { _objToValidate, _states, StateConstructor } = this;
+    const state = new StateConstructor(path, _objToValidate);
+
+    _states.push(state);
     return state;
   }
 
@@ -29,7 +31,7 @@ class Validator {
   }
 
   getErrors() {
-    return this.states.map(state => state.getInfo()).filter(stateInfo => !stateInfo.isCorrect).map((stateInfo) => {
+    return this._states.map(state => state.getInfo()).filter(stateInfo => !stateInfo.isCorrect).map((stateInfo) => {
       delete stateInfo.isCorrect;
       return stateInfo;
     });

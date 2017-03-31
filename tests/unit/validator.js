@@ -16,12 +16,21 @@ describe('Validator', () => {
     });
   });
 
+  describe('#getValidationObject', () => {
+    it('should get validation object', () => {
+      const { objectToValidate } = testData;
+      const validator = new Validator(objectToValidate);
+
+      validator.getValidationObject().should.be.eql(objectToValidate);
+    });
+  });
+
   describe('#property', () => {
     it('should create state for property', () => {
       const { objectToValidate, path, mockStateReturn } = testData;
       const validator = new Validator(objectToValidate);
 
-      validator.StateConstructor = sinon.mock().withArgs(path, objectToValidate[path]).returns(mockStateReturn);
+      validator.StateConstructor = sinon.mock().withArgs(path, objectToValidate).returns(mockStateReturn);
 
       validator.property(path).should.be.eql(mockStateReturn);
       validator.StateConstructor.verify();
@@ -33,7 +42,7 @@ describe('Validator', () => {
       const { objectToValidate, stateWithError } = testData;
       const validator = new Validator(objectToValidate);
 
-      validator.states.push(stateWithError);
+      validator._states.push(stateWithError);
 
       validator.hasErrors().should.be.eql(true);
     });
@@ -42,7 +51,7 @@ describe('Validator', () => {
       const { objectToValidate, stateWithoutError } = testData;
       const validator = new Validator(objectToValidate);
 
-      validator.states.push(stateWithoutError);
+      validator._states.push(stateWithoutError);
 
       validator.hasErrors().should.be.eql(false);
     });
@@ -53,7 +62,7 @@ describe('Validator', () => {
       const { objectToValidate, stateWithError, validatorErrors } = testData;
       const validator = new Validator(objectToValidate);
 
-      validator.states.push(stateWithError);
+      validator._states.push(stateWithError);
 
       validator.getErrors().should.be.eql(validatorErrors);
     });
@@ -62,7 +71,7 @@ describe('Validator', () => {
       const { objectToValidate, stateWithoutError } = testData;
       const validator = new Validator(objectToValidate);
 
-      validator.states.push(stateWithoutError);
+      validator._states.push(stateWithoutError);
 
       validator.getErrors().should.have.length(0);
     });

@@ -3,10 +3,12 @@
 const fs = require('fs');
 const path = require('path');
 
+const get = require('lodash.get');
+
 class ValidationState {
-  constructor(path, value) {
+  constructor(path, obj) {
     this.path = path;
-    this.value = value;
+    this.obj = obj;
 
     this.isOptional = false;
     this.checks = [];
@@ -28,11 +30,12 @@ class ValidationState {
   }
 
   getInfo() {
-    const { path, value, customMessage, checks } = this;
+    const self = this;
+    const { path, customMessage, checks } = self;
     const incorrectChecks = checks.filter(check => !check.isCorrect);
     const result = {
       path,
-      value,
+      value: self._getValue(),
       isCorrect: incorrectChecks.length === 0,
       errorMessage: null
     };
@@ -46,14 +49,21 @@ class ValidationState {
     return result;
   }
 
+  _getValue() {
+    const { path, obj } = this;
+
+    return get(obj, path);
+  }
+
   static applyFieldValidator(fieldValidator) {
     ValidationState.prototype[fieldValidator.name] = function (...opts) {
       const self = this;
+      const value = self._getValue();
 
-      if (self.isOptional && (self.value === null || self.value === undefined)) {
+      if (self.isOptional && (value === null || value === undefined)) {
         self.checks = [];
       } else {
-        self.checks.push(fieldValidator.check(self.value, ...opts));
+        self.checks.push(fieldValidator.check(value, ...opts));
       }
 
       return self;
