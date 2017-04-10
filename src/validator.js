@@ -9,7 +9,6 @@ class Validator {
     this._states = [];
 
     this.StateConstructor = State;
-    this.FieldValidatorConstructor = BaseFieldValidator;
   }
 
   getValidationObject() {
@@ -47,7 +46,7 @@ class Validator {
           value: methodName
         },
         defaultOpts: {
-          value: Object(customValidator.defaultOpts)
+          value: customValidator.defaultOpts
         },
         execute: {
           value: customValidator.execute

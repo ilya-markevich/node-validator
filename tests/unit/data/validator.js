@@ -1,7 +1,6 @@
 'use strict';
 
 const StateConstructor = require('../../../src/state');
-const FieldValidatorConstructor = require('../../../src/fieldValidators/base');
 
 const objectToValidate = {
   data: 'test data',
@@ -10,8 +9,7 @@ const objectToValidate = {
 const initialState = {
   _states: [],
   _objToValidate: objectToValidate,
-  StateConstructor,
-  FieldValidatorConstructor
+  StateConstructor
 };
 
 const path = 'data';

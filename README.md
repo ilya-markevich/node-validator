@@ -15,21 +15,50 @@ Validator for NodeJS.
 * [Usage](#usage)
 * [API](#api)
   - [Validator](#validator)
-    + [`Validator.extend()`](#validatorextend)
+    + [`Validator.extend()`](#validatorextendcustomvalidators)
   - [Validator instance](#validator-instance)
-    + [`validatorInstance.getValidationObject()`](#validatorInstancegetValidationObject)
-    + [`validatorInstance.property()`](#validatorInstanceproperty-propertyPath)
-    + [`validatorInstance.hasErrors()`](#validatorInstancehasErrors)
-    + [`validatorInstance.getErrors()`](#validatorInstancegetErrors)
+    + [`validatorInstance.getValidationObject()`](#validatorinstancegetvalidationobject)
+    + [`validatorInstance.property()`](#validatorinstancepropertypropertypath)
+    + [`validatorInstance.hasErrors()`](#validatorinstancehaserrors)
+    + [`validatorInstance.getErrors()`](#validatorinstancegeterrors)
   - [Validator state instance](#validator-state-instance)
-    + [`validatorStateInstance.optional()`](#validatorStateInstanceoptional)
-    + [`validatorStateInstance.withMessage()`](#validatorStateInstancewithMessage-errorMessage)
+    + [`validatorStateInstance.optional()`](#validatorstateinstanceoptional)
+    + [`validatorStateInstance.withMessage()`](#validatorstateinstancewithmessageerrormessage)
 + [Error message format](#error-message-format)
 * [Fields validators](#field-validators)
 * [What's in a name?](#whats-in-a-name)
 * [Author](#author)
 
 # Usage
+
+To use the validator just create new validator instance and pass an object for validation.
+Use [property](#validatorinstancepropertypropertypath) method to choose a value and [state methods](#validator-state-instance) to validate the value.
+   
+Example of code:
+``` Javascript
+const Validator = require('dee-validator');
+const validator = new Validator({
+    field1: 'test',
+    field2: 10,
+    field3: true
+});
+
+validator.property('field1').isNotEmpty().isEqual('1');
+
+validator.property('field2').isNotEmpty().isInteger({
+    min: 1,
+    max: 20
+});
+
+validator.property('field3').isNotEmpty().isString().withMessage('field3 should be a special string.');
+
+validator.hasErrors(); // true
+validator.getErrors();
+// [
+//    { path: 'field1', value: 'test', errorMessage: 'field1 should be equal 1' },
+//    { path: 'field3', value: true, errorMessage: 'field3 should be a special string.' }
+// ]
+```
 
 # API
 
@@ -40,7 +69,25 @@ Register new custom validators.
 
 Args:
 
-* `customValidators [Object]`:
+* `customValidators [Object]`: object with custom field validators.
+
+Example:
+``` javascript
+// here we create two custom validators.
+// First validator: isTest. It checks if value equal to 'test' string. In case it's not, error message will be = 'should pass isTest validation'
+// Second validator: isDivisibleBy. It accepts value and divisible number and check if value is divided by the number. In case it's not - custom error message will be created.
+// If user doesn't pass any divisible number, 2 will be used as default.
+{
+  isTest: {
+    execute: value => value === 'test'
+  }
+  isDivisibleBy: {
+    execute: (value, divizor) => typeof value === 'number' && value % divizor === 0,
+      getErrorMessage: (divizor) => return `should be divided by ${divizor}`,
+      defaultOpts: 2
+  }
+}
+```
 
 ## Validator instance
 
@@ -60,8 +107,14 @@ Return if validator has any errors.
 ### `validatorInstance.getErrors()`
 Return all validation errors.
 
-Errors format:
-
+Example of error:
+``` javascript
+{
+    path: 'a',
+    value: 'test',
+    errorMessage: 'value should be a number'
+}
+```
 
 ## Validator state instance
 
@@ -71,39 +124,42 @@ Apply all checks only if a value is not `undefined` or `null`
 ### `validatorStateInstance.withMessage(errorMessage)`
 Set custom error message instead of default one.
 
+See [other methods](#field-validators) available on a state instance.
+
 # Error message format
 The validator create default error message. It's quite readable (you can see how the message is created in tests.).
-If you are not satisfied with default error message, you can use [custom](#validatorStateInstancewithMessage-errorMessage) method to create a new one.
+If you are not satisfied with default error message, you can use [custom](#validatorstateinstancewithmessageerrormessage) method to create a new one.
 
 # Fields validators
-**isArray()** - check if a value is array.
-**isArrayLength(opts)** - check if an array has correct length. `opts` is an object which defaults to `{ min: 0, max: undefined }`.
+
+- **isArray()** - check if a value is array.
+- **isArrayLength(opts)** - check if an array has correct length. `opts` is an object which defaults to `{ min: 0, max: undefined }`.
 `min` and `max` options set acceptable range for the array length.
-**isBase64String()** - check if a string is in base64 format.
-**isBoolean(opts)** - check if a value is boolean. `opts` is an object which defaults to `{ convert: true }`.
+- **isBase64String()** - check if a string is in base64 format.
+- **isBoolean(opts)** - check if a value is boolean. `opts` is an object which defaults to `{ convert: true }`.
 If `convert = true` string value like 'true'/'false' are accepted as booleans.
-**isDate(opts)** - check if a value is date. `opts` is an object which defaults to `{ before: undefined, after: undefined }`.
+- **isDate(opts)** - check if a value is date. `opts` is an object which defaults to `{ before: undefined, after: undefined }`.
 `after` and `before` options set acceptable range for the date.
-**isEachIn(inArray)** - check if each item from value is in `inArray`.
-**isEmail()** - check if a string value is an email.
-**isEqual(equalTo)** - check if a value is equal to `equalTo`.
-**isFloat(opts)** - check if a value is a float. `opts` is an object which defaults to `{ min: 0, max: undefined, convert: true }`.
+- **isEachIn(inArray)** - check if each item from value is in `inArray`.
+- **isEmail()** - check if a string value is an email.
+- **isEqual(equalTo)** - check if a value is equal to `equalTo`.
+- **isFloat(opts)** - check if a value is a float. `opts` is an object which defaults to `{ min: 0, max: undefined, convert: true }`.
 `min` and `max` options set acceptable range for the float value. If `convert = true`, in case if value is a string it will be converted to a float.
-**isIn(inArray)** - check if a value is in `inArray`.
-**isInteger(opts)** - check if a value is an integer. `opts` is an object which defaults to `{ min: 0, max: undefined, convert: true }`.
+- **isIn(inArray)** - check if a value is in `inArray`.
+- **isInteger(opts)** - check if a value is an integer. `opts` is an object which defaults to `{ min: 0, max: undefined, convert: true }`.
 `min` and `max` options set acceptable range for the integer value. If `convert = true`, in case if value is a string it will be converted to an integer.
-**isIpString(opts)** - check if a string value is correct ip address. `opts` is an object which defaults to `{ v4: undefined, v6: undefined}`.
+- **isIpString(opts)** - check if a string value is correct ip address. `opts` is an object which defaults to `{ v4: undefined, v6: undefined}`.
 `v4` and `v6` are formats for checking. If both are undefined, the string value should be in ipv4 or ipv6 formats.
-**isJsonString()** - check if a value is json string(`JSON.parse` is used).
-**isLength(opts)** - check if a string value has correct length. `opts` is an object which defaults to `{ min: 0, max: undefined }`.
+- **isJsonString()** - check if a value is json string(`JSON.parse` is used).
+- **isLength(opts)** - check if a string value has correct length. `opts` is an object which defaults to `{ min: 0, max: undefined }`.
 `min` and `max` options set acceptable range for the string length.
-**isLowerCaseString()** - check if all letters in a string are lowercase.
-**isMatch(regexp)** - check if a string value is matched to `regexp`.
-**isNotEmpty()** - check if a string is not empty.
-**isNumericString()** - check if a string contains only numbers.
-**isString()** - check if a value is a string.
-**isUpperCaseString()** - check if all letters in a string are uppercase.
-**isUrlString()** - check if a string value is a correct url.
+- **isLowerCaseString()** - check if all letters in a string are lowercase.
+- **isMatch(regexp)** - check if a string value is matched to `regexp`.
+- **isNotEmpty()** - check if a string is not empty.
+- **isNumericString()** - check if a string contains only numbers.
+- **isString()** - check if a value is a string.
+- **isUpperCaseString()** - check if all letters in a string are uppercase.
+- **isUrlString()** - check if a string value is a correct url.
 
 # What's in a name?
 Dee is one of my favorite detective characters - [Judge Dee](https://en.wikipedia.org/wiki/Judge_Dee).
