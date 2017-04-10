@@ -29,6 +29,8 @@
     "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
+    "is-ip": "^2.0.0",
+    "is-url": "^1.2.2",
     "isemail": "^2.2.1",
     "lodash.get": "^4.4.2"
   },
