@@ -83,8 +83,8 @@ Example:
   }
   isDivisibleBy: {
     execute: (value, divizor) => typeof value === 'number' && value % divizor === 0,
-      getErrorMessage: (divizor) => return `should be divided by ${divizor}`,
-      defaultOpts: 2
+    getErrorMessage: (divizor) => return `should be divided by ${divizor}`,
+    defaultOpts: 2
   }
 }
 ```
@@ -102,12 +102,12 @@ Args:
 * `propertyPath [String]`: path to property in validation object ([lodash.get](https://lodash.com/docs/4.17.4#get) is used to resolve a value)
 
 ### `validatorInstance.hasErrors()`
-Return if validator has any errors.
+Return `true` if validator has any errors. In other case return `false`.
 
 ### `validatorInstance.getErrors()`
 Return all validation errors.
 
-Example of error:
+Example of an error:
 ``` javascript
 {
     path: 'a',
@@ -124,11 +124,11 @@ Apply all checks only if a value is not `undefined` or `null`
 ### `validatorStateInstance.withMessage(errorMessage)`
 Set custom error message instead of default one.
 
-See [other methods](#field-validators) available on a state instance.
+See [other methods](#fields-validators) available on a state instance.
 
 # Error message format
-The validator create default error message. It's quite readable (you can see how the message is created in tests.).
-If you are not satisfied with default error message, you can use [custom](#validatorstateinstancewithmessageerrormessage) method to create a new one.
+The validator create default error message for each property. It's quite readable (you can see how the message is created in each field validator implementation.).
+If you are not satisfied with default error message, you can use [withMessage](#validatorstateinstancewithmessageerrormessage) method to create a new one.
 
 # Fields validators
 
