@@ -2,18 +2,22 @@
 
 const Validator = require('../../../src/validator');
 
-module.exports = (testCases) => {
-  testCases.forEach((testCase) => {
-    const { obj, validatorName, opts, errors } = testCase;
-    const optsString = typeof opts === 'object' ? JSON.stringify(opts) : String(opts);
+module.exports = (validatorName) => {
+  const testCases = require(`../data/${validatorName}`);
 
-    it(`should ${errors.length === 0 ? 'not ' : ''}get errors for test with options = ${optsString}`, () => {
-      const validator = new Validator(obj);
+  describe(`${validatorName} integration`, () => {
+    testCases.forEach((testCase) => {
+      const { obj, validatorName, opts, errors } = testCase;
+      const optsString = typeof opts === 'object' ? JSON.stringify(opts) : String(opts);
 
-      validator.property('test')[validatorName](opts);
+      it(`should ${errors.length === 0 ? 'not ' : ''}get errors for test with options = ${optsString}`, () => {
+        const validator = new Validator(obj);
 
-      validator.hasErrors().should.be.eql(errors.length > 0);
-      validator.getErrors().should.be.eql(errors);
+        validator.property('test')[validatorName](opts);
+
+        validator.hasErrors().should.be.eql(errors.length > 0);
+        validator.getErrors().should.be.eql(errors);
+      });
     });
   });
 };

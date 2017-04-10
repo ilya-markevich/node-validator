@@ -12,7 +12,7 @@ class IsIpString extends BaseFieldValidator {
     const { v4, v6 } = opts;
     let isCorrectIp;
 
-    if (!v4 && !v6) {
+    if ((!v4 && !v6) || (v4 && v6)) {
       isCorrectIp = isIp(value);
     } else if (v4) {
       isCorrectIp = isIp.v4(value);
@@ -23,8 +23,16 @@ class IsIpString extends BaseFieldValidator {
     return typeof value === 'string' && isCorrectIp;
   }
 
-  getErrorMessage() {
-    return 'should be an ip string';
+  getErrorMessage(opts) {
+    const { v4, v6 } = opts;
+
+    if (!v4 && !v6 || v4 && v6) {
+      return 'should be an ip string';
+    } else if (v4) {
+      return 'should be an ipv4 string';
+    } else {
+      return 'should be an ipv6 string';
+    }
   }
 }
 

@@ -15,7 +15,17 @@ const executeTestCases = [
 ];
 
 const errorMessageTestCases = [
-  generateErrorMessageData('should be an ip string')
+  generateErrorMessageData('should be an ip string', {}),
+  generateErrorMessageData('should be an ip string', {
+    v4: true,
+    v6: true
+  }),
+  generateErrorMessageData('should be an ipv4 string', {
+    v4: true
+  }),
+  generateErrorMessageData('should be an ipv6 string', {
+    v6: true
+  })
 ];
 
 module.exports = {
