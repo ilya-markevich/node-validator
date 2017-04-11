@@ -31,7 +31,7 @@ Validator for NodeJS.
 
 # Usage
 
-To use the validator just create new validator instance and pass an object for validation.
+To use the validator just create new validator instance with an object for validation as a parameter.
 Use [property](#validatorinstancepropertypropertypath) method to choose a value and [state methods](#validator-state-instance) to validate the value.
    
 Example of code:
@@ -102,7 +102,7 @@ Args:
 * `propertyPath [String]`: path to property in validation object ([lodash.get](https://lodash.com/docs/4.17.4#get) is used to resolve a value)
 
 ### `validatorInstance.hasErrors()`
-Return `true` if validator has any errors. In other case return `false`.
+Return `true` if validator has errors. In the other case return `false`.
 
 ### `validatorInstance.getErrors()`
 Return all validation errors.
@@ -119,35 +119,35 @@ Example of an error:
 ## Validator state instance
 
 ### `validatorStateInstance.optional()`
-Apply all checks only if a value is not `undefined` or `null`
+Apply all checks only if a value is not `undefined` or `null`.
 
 ### `validatorStateInstance.withMessage(errorMessage)`
 Set custom error message instead of default one.
 
-See [other methods](#fields-validators) available on a state instance.
+See [other methods](#fields-validators) available on state instance.
 
 # Error message format
-The validator create default error message for each property. It's quite readable (you can see how the message is created in each field validator implementation.).
+The validator creates default error message for each property. It's quite readable (you can see how the message is created in each field validator implementation).
 If you are not satisfied with default error message, you can use [withMessage](#validatorstateinstancewithmessageerrormessage) method to create a new one.
 
 # Fields validators
 
 - **isArray()** - check if a value is array.
-- **isArrayLength(opts)** - check if an array has correct length. `opts` is an object which defaults to `{ min: 0, max: undefined }`.
+- **isArrayLength(opts)** - check if an array value has correct length. `opts` is an object which defaults to `{ min: 0, max: undefined }`.
 `min` and `max` options set acceptable range for the array length.
 - **isBase64String()** - check if a string is in base64 format.
 - **isBoolean(opts)** - check if a value is boolean. `opts` is an object which defaults to `{ convert: true }`.
-If `convert = true` string value like 'true'/'false' are accepted as booleans.
+If `convert = true` string values like 'true'/'false' are accepted as booleans.
 - **isDate(opts)** - check if a value is date. `opts` is an object which defaults to `{ before: undefined, after: undefined }`.
 `after` and `before` options set acceptable range for the date.
 - **isEachIn(inArray)** - check if each item from value is in `inArray`.
 - **isEmail()** - check if a string value is an email.
 - **isEqual(equalTo)** - check if a value is equal to `equalTo`.
 - **isFloat(opts)** - check if a value is a float. `opts` is an object which defaults to `{ min: 0, max: undefined, convert: true }`.
-`min` and `max` options set acceptable range for the float value. If `convert = true`, in case if value is a string it will be converted to a float.
+`min` and `max` options set acceptable range for the float value. If `convert = true` and value is a string the value will be converted to a float.
 - **isIn(inArray)** - check if a value is in `inArray`.
 - **isInteger(opts)** - check if a value is an integer. `opts` is an object which defaults to `{ min: 0, max: undefined, convert: true }`.
-`min` and `max` options set acceptable range for the integer value. If `convert = true`, in case if value is a string it will be converted to an integer.
+`min` and `max` options set acceptable range for the integer value. If `convert = true` and value is a string the value will be converted to an integer.
 - **isIpString(opts)** - check if a string value is correct ip address. `opts` is an object which defaults to `{ v4: undefined, v6: undefined}`.
 `v4` and `v6` are formats for checking. If both are undefined, the string value should be in ipv4 or ipv6 formats.
 - **isJsonString()** - check if a value is json string(`JSON.parse` is used).
