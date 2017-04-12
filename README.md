@@ -25,7 +25,7 @@ Validator for NodeJS.
     + [`validatorStateInstance.optional()`](#validatorstateinstanceoptional)
     + [`validatorStateInstance.withMessage()`](#validatorstateinstancewithmessageerrormessage)
 + [Error message format](#error-message-format)
-* [Fields validators](#field-validators)
+* [Fields validators](#fields-validators)
 * [What's in a name?](#whats-in-a-name)
 * [Author](#author)
 
