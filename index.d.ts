@@ -5,13 +5,13 @@ declare class State {
 
   public isArray(): State;
 
-  public isArrayLength(options: { min?: number, max?: number }): State;
+  public isArrayLength(options?: { min?: number, max?: number }): State;
 
   public isBase64String(): State;
 
-  public isBoolean(options: { convert?: boolean }): State;
+  public isBoolean(options?: { convert?: boolean }): State;
 
-  public isDate(options: { before?: Date | string, after: Date | string }): State;
+  public isDate(options?: { before?: Date | string, after?: Date | string }): State;
 
   public isEachIn(inArray: any[]): State;
 
@@ -19,17 +19,17 @@ declare class State {
 
   public isEqual(equalTo: any): State;
 
-  public isFloat(options: { min?: number, max?: number, convert?: boolean }): State;
+  public isFloat(options?: { min?: number, max?: number, convert?: boolean }): State;
 
   public isIn(inArray: any[]): State;
 
-  public isInteger(options: { min?: number, max?: number, convert?: boolean }): State;
+  public isInteger(options?: { min?: number, max?: number, convert?: boolean }): State;
 
-  public isIpString(options: { v4?: boolean, v6?: boolean }): State;
+  public isIpString(options?: { v4?: boolean, v6?: boolean }): State;
 
   public isJsonString(): State;
 
-  public isLength(options: { min?: number, max?: number }): State;
+  public isLength(options?: { min?: number, max?: number }): State;
 
   public isLowerCaseString(): State;
 
@@ -45,7 +45,7 @@ declare class State {
 
   public isUrlString(): State;
 
-  [propName: string]: (options?: Object) => State;
+  [propName: string]: (options?: any) => State;
 }
 
 declare interface ValidationError {
@@ -55,16 +55,16 @@ declare interface ValidationError {
 }
 
 declare interface FieldValidator {
-  execute: (value: any, opts?: Object) => boolean,
+  execute: (value: any, opts?: any) => boolean,
   defaultOpts?: object,
-  getErrorMessage?: (opts?: Object) => string
+  getErrorMessage?: (opts?: any) => string
 }
 
 declare type ValidatorsObject = {
   [propName: string]: FieldValidator
 }
 
-export default class Validator {
+declare class Validator {
   constructor(objectToValidate: object);
 
   public getValidationObject(): object;
@@ -77,3 +77,5 @@ export default class Validator {
 
   public extend(validators: ValidatorsObject): void;
 }
+
+export = Validator;

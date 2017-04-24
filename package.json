@@ -22,7 +22,7 @@
   "homepage": "https://github.com/ilya-markevich/node-validator#readme",
   "scripts": {
     "eslint": "eslint src/ tests/ index.js",
-    "test": "mocha --ui tdd --recursive tests",
+    "test": "tsc && mocha --ui tdd --recursive tests",
     "cover": "nyc npm test",
     "precommit": "npm run eslint",
     "prepush": "npm run cover",

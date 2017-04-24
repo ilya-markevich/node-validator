@@ -12,10 +12,9 @@
     "pretty": true,
     "removeComments": true,
     "strictNullChecks": true,
-    "target": "es6",
-    "outDir": "tsTests"
+    "target": "es6"
   },
   "include": [
-    "tests/typescript/**/*.ts"
+    "typescriptTests/**/*"
   ]
 }
