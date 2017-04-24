@@ -3,4 +3,4 @@ coverage
 .idea
 npm-debug.log
 .nyc_output
-typescriptTests/**/*.js
+tsTests/**/*.js
