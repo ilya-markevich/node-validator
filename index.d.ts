@@ -19,56 +19,56 @@ declare namespace Validator {
     errorMessage: string | null
   }
 
-  export type ValidatorsObject = {
+  export interface ValidatorsObject {
     [propName: string]: FieldValidator
   }
 
-  class State {
-    public optional(): State;
+  export interface State {
+    optional(): State;
 
-    public withMessage(errorMessage: string): State;
+    withMessage(errorMessage: string): State;
 
-    public isArray(): State;
+    isArray(): State;
 
-    public isArrayLength(options?: { min?: number, max?: number }): State;
+    isArrayLength(options?: { min?: number, max?: number }): State;
 
-    public isBase64String(): State;
+    isBase64String(): State;
 
-    public isBoolean(options?: { convert?: boolean }): State;
+    isBoolean(options?: { convert?: boolean }): State;
 
-    public isDate(options?: { before?: Date | string, after?: Date | string }): State;
+    isDate(options?: { before?: Date | string, after?: Date | string }): State;
 
-    public isEachIn(inArray: any[]): State;
+    isEachIn(inArray: any[]): State;
 
-    public isEmail(): State;
+    isEmail(): State;
 
-    public isEqual(equalTo: any): State;
+    isEqual(equalTo: any): State;
 
-    public isFloat(options?: { min?: number, max?: number, convert?: boolean }): State;
+    isFloat(options?: { min?: number, max?: number, convert?: boolean }): State;
 
-    public isIn(inArray: any[]): State;
+    isIn(inArray: any[]): State;
 
-    public isInteger(options?: { min?: number, max?: number, convert?: boolean }): State;
+    isInteger(options?: { min?: number, max?: number, convert?: boolean }): State;
 
-    public isIpString(options?: { v4?: boolean, v6?: boolean }): State;
+    isIpString(options?: { v4?: boolean, v6?: boolean }): State;
 
-    public isJsonString(): State;
+    isJsonString(): State;
 
-    public isLength(options?: { min?: number, max?: number }): State;
+    isLength(options?: { min?: number, max?: number }): State;
 
-    public isLowerCaseString(): State;
+    isLowerCaseString(): State;
 
-    public isMatch(matchRegexp: RegExp): State;
+    isMatch(matchRegexp: RegExp): State;
 
-    public isNotEmpty(): State;
+    isNotEmpty(): State;
 
-    public isNumericString(): State;
+    isNumericString(): State;
 
-    public isString(): State;
+    isString(): State;
 
-    public isUpperCaseString(): State;
+    isUpperCaseString(): State;
 
-    public isUrlString(): State;
+    isUrlString(): State;
 
     [propName: string]: (options?: any) => State;
   }
