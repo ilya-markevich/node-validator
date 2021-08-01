@@ -1,31 +1,37 @@
-'use strict';
+"use strict";
 
-/* eslint no-magic-numbers: "off" */
-
-const BaseFieldValidator = require('./base');
+const BaseFieldValidator = require("./base");
 
 class IsBase64String extends BaseFieldValidator {
   constructor() {
-    super('isBase64String');
-    this.notBase64Regexp = /[^A-Z0-9+=]/i;
+    super("isBase64String");
+    this.notBase64Regexp = /[^A-Z0-9+=]/iu;
   }
 
   execute(value) {
     const base64LengthDivisor = 4;
 
-    if (typeof value !== 'string' || value.length % base64LengthDivisor !== 0 || this.notBase64Regexp.test(value)) {
+    if (
+      typeof value !== "string" ||
+      value.length % base64LengthDivisor !== 0 ||
+      this.notBase64Regexp.test(value)
+    ) {
       return false;
     }
 
-    const firstPaddingChar = value.indexOf('=');
+    const firstPaddingChar = value.indexOf("=");
     const valueLength = value.length;
 
-    return firstPaddingChar === -1 || firstPaddingChar === valueLength - 1
-      || (firstPaddingChar === valueLength - 2 && value[valueLength - 1] === '=');
+    return (
+      firstPaddingChar === -1 ||
+      firstPaddingChar === valueLength - 1 ||
+      // eslint-disable-next-line no-magic-numbers
+      (firstPaddingChar === valueLength - 2 && value[valueLength - 1] === "=")
+    );
   }
 
   getErrorMessage() {
-    return 'should be a base64 string';
+    return "should be a base64 string";
   }
 }
 

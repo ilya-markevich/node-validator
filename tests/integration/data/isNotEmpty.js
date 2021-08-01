@@ -1,12 +1,16 @@
-'use strict';
+"use strict";
+
+const {
+  generateIntegrationTestCase,
+} = require("../../helpers/generateFieldValidatorData");
 
 /* eslint no-magic-numbers: "off" */
 
-const validatorName = 'isNotEmpty';
-const generateTest = require('../../helpers/generateFieldValidatorData').generateIntegrationTestCase.bind(null, validatorName);
+const validatorName = "isNotEmpty";
+const generateTest = generateIntegrationTestCase(validatorName);
 
 module.exports = [
-  generateTest('test'),
-  generateTest('', null, 'should be not empty'),
-  generateTest('0')
+  generateTest("test"),
+  generateTest("", null, "should be not empty"),
+  generateTest("0"),
 ];

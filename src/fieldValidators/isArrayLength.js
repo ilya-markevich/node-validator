@@ -1,26 +1,28 @@
-'use strict';
+"use strict";
 
-const BaseFieldValidator = require('./base');
+const BaseFieldValidator = require("./base");
+
+const isValidRangeValue = (value) => Number.isInteger(value);
 
 class IsArrayLength extends BaseFieldValidator {
   constructor() {
-    super('isArrayLength', {
-      min: 0
-    });
+    super("isArrayLength", { min: 0 });
   }
 
   execute(value, opts) {
     if (Array.isArray(value)) {
       const arrayLength = value.length;
 
-      return this._getRangeExecution(opts, arrayLength, Number.isInteger.bind(Number));
-    } else {
-      return false;
+      return this._getRangeExecution(opts, arrayLength, isValidRangeValue);
     }
+
+    return false;
   }
 
   getErrorMessage(opts) {
-    return `should have length${this._getRangeErrorMessage(opts, Number.isInteger.bind(Number))}`;
+    const rangeMessage = this._getRangeErrorMessage(opts, isValidRangeValue);
+
+    return `should have length${rangeMessage}`;
   }
 }
 

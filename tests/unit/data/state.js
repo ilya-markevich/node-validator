@@ -1,70 +1,64 @@
-'use strict';
+"use strict";
 
-const path = 'test';
+const path = "test";
 const objectToValidate = {
-  test: 'test string',
-  name: 'test name'
+  test: "test string",
+  name: "test name",
 };
 
-const obj = {
-  test: 'test string'
-};
-const objWithEmptyValue = {
-  test: undefined
-};
-const customMessage = 'custom message';
+const obj = { test: "test string" };
+const objWithEmptyValue = { test: undefined };
+const customMessage = "custom message";
 
 const initialState = {
-  path,
+  pathToProp: path,
   obj,
   isOptional: false,
   checks: [],
-  customMessage: null
+  customMessage: null,
 };
 const stateAfterOptional = {
-  path,
+  pathToProp: path,
   obj,
   isOptional: true,
   checks: [],
-  customMessage: null
+  customMessage: null,
 };
 const stateAfterCustomMessage = {
-  path,
+  pathToProp: path,
   obj,
   isOptional: false,
   checks: [],
-  customMessage
+  customMessage,
 };
 
 const expectedInfoWithoutErrors = {
   path,
   value: obj[path],
   isCorrect: true,
-  errorMessage: null
+  errorMessage: null,
 };
 
-const checkInfoWithError = {
-  errorMessage: 'should pass tests'
-};
+const checkInfoWithError = { errorMessage: "should pass tests" };
 const expectedInfoWithErrors = {
   path,
   value: obj[path],
   isCorrect: false,
-  errorMessage: `${path} ${checkInfoWithError.errorMessage}`
+  errorMessage: `${path} ${checkInfoWithError.errorMessage}`,
 };
 
 const expectedInfoWithErrorsAndCustomMessage = {
   path,
   value: obj[path],
   isCorrect: false,
-  errorMessage: customMessage
+  errorMessage: customMessage,
 };
 
-const newValidatorName = 'isTest';
+const newValidatorName = "isTest";
 const newValidatorOpts = {};
 const newValidatorResult = {
   isCorrect: true,
-  errorMessage: null
+  errorMessage: null,
 };
 
 module.exports = {
@@ -82,5 +76,5 @@ module.exports = {
   expectedInfoWithErrorsAndCustomMessage,
   newValidatorName,
   newValidatorOpts,
-  newValidatorResult
+  newValidatorResult,
 };

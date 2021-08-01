@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-const BaseFieldValidator = require('./base');
+const BaseFieldValidator = require("./base");
 
 class IsEqual extends BaseFieldValidator {
   constructor() {
-    super('isEqual');
+    super("isEqual");
   }
 
   execute(value, equalTo) {

@@ -1,21 +1,21 @@
-'use strict';
+"use strict";
 
-const name = 'isTest';
+const name = "isTest";
 const defaultOpts = {
-  data: 'test'
+  data: "test",
 };
 
-const value = 'test opts';
+const value = "test opts";
 const opts = {};
-const appliedDefaultOpts = Object.assign({}, opts, defaultOpts);
-const errorMessage = 'test error message';
+const appliedDefaultOpts = { ...opts, ...defaultOpts };
+const errorMessage = "test error message";
 
 const expectedIncorrectCheckResult = {
   isCorrect: false,
-  errorMessage
+  errorMessage,
 };
 const expectedCorrectCheckResult = {
-  isCorrect: true
+  isCorrect: true,
 };
 
 module.exports = {
@@ -26,5 +26,5 @@ module.exports = {
   appliedDefaultOpts,
   errorMessage,
   expectedIncorrectCheckResult,
-  expectedCorrectCheckResult
+  expectedCorrectCheckResult,
 };

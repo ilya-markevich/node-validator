@@ -1,13 +1,12 @@
-'use strict';
+"use strict";
 
-const BaseFieldValidator = require('./base');
+const BaseFieldValidator = require("./base");
+
+const isValidRangeValue = (value) => Number.isInteger(value);
 
 class IsNumber extends BaseFieldValidator {
   constructor() {
-    super('isInteger', {
-      min: 0,
-      convert: true
-    });
+    super("isInteger", { min: 0, convert: true });
   }
 
   _isStringIsInteger(str) {
@@ -17,17 +16,22 @@ class IsNumber extends BaseFieldValidator {
   }
 
   execute(value, opts) {
-    const self = this;
-
-    if (Number.isInteger(value) || typeof value === 'string' && opts.convert && self._isStringIsInteger(value)) {
-      return self._getRangeExecution(opts, value, Number.isInteger.bind(Number));
-    } else {
-      return false;
+    if (
+      Number.isInteger(value) ||
+      (typeof value === "string" &&
+        opts.convert &&
+        this._isStringIsInteger(value))
+    ) {
+      return this._getRangeExecution(opts, value, isValidRangeValue);
     }
+
+    return false;
   }
 
   getErrorMessage(opts) {
-    return `should be an integer${this._getRangeErrorMessage(opts, Number.isInteger.bind(Number))}`;
+    const rangeMessage = this._getRangeErrorMessage(opts, isValidRangeValue);
+
+    return `should be an integer${rangeMessage}`;
   }
 }
 

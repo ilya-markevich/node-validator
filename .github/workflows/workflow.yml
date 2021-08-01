@@ -1,0 +1,64 @@
+name: Esling configs build
+on:
+    push:
+        branches:
+            - master
+    pull_request:
+        branches:
+            - master
+jobs:
+    test:
+        name: Tests
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [14.x]
+        steps:
+            -   name: Checkout repo
+                uses: actions/checkout@v2
+
+            -   name: Install Node ${{ matrix.node-version }}
+                uses: actions/setup-node@v1
+                with:
+                    node-version: ${{ matrix.node-version }}
+
+            -   name: Install dependencies
+                run: npm install
+
+            -   name: Run lint
+                run: npm run lint
+
+            -   name: Run tests
+                run: npm run cover
+    version_check:
+        name: Package.json version check
+        needs: test
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [ 14.x ]
+        steps:
+            -   name: Checkout repo
+                uses: actions/checkout@v2
+
+            -   name: Version check
+                run: |
+                    git fetch --prune --tags
+                    chmod +x ./scripts/version-check.sh
+                    ./scripts/version-check.sh
+    publish:
+        name: Publish tag
+        needs: version_check
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [14.x]
+        if: github.ref == 'refs/heads/master'
+        steps:
+            -   name: Checkout repo
+                uses: actions/checkout@v2
+
+            -   name: Publishing
+                run: |
+                    chmod +x ./scripts/publish.sh
+                    sh ./scripts/publish.sh

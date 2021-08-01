@@ -1,12 +1,16 @@
-'use strict';
+"use strict";
+
+const {
+  generateIntegrationTestCase,
+} = require("../../helpers/generateFieldValidatorData");
 
 /* eslint no-magic-numbers: "off" */
 
-const validatorName = 'isMatch';
-const generateTest = require('../../helpers/generateFieldValidatorData').generateIntegrationTestCase.bind(null, validatorName);
+const validatorName = "isMatch";
+const generateTest = generateIntegrationTestCase(validatorName);
 
 module.exports = [
-  generateTest('test', /te/),
-  generateTest('test', /abc/, 'should match /abc/'),
-  generateTest('test', /t/)
+  generateTest("test", /te/u),
+  generateTest("test", /abc/u, "should match /abc/u"),
+  generateTest("test", /t/u),
 ];

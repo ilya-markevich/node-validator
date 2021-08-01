@@ -4,7 +4,7 @@
     "name": "Ilya Markevich",
     "url": "https://github.com/ilya-markevich"
   },
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "Object fields validator",
   "keywords": [
     "validator",
@@ -21,32 +21,33 @@
   },
   "homepage": "https://github.com/ilya-markevich/node-validator#readme",
   "scripts": {
-    "eslint": "eslint src/ tests/ index.js",
+    "eslint": "eslint src/ tests/",
     "test": "tsc && mocha --ui tdd --recursive tests",
     "cover": "nyc npm test",
-    "precommit": "npm run eslint",
-    "prepush": "npm run cover",
     "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls"
   },
   "dependencies": {
-    "is-ip": "^2.0.0",
-    "is-url": "^1.2.2",
-    "isemail": "^2.2.1",
-    "lodash.get": "^4.4.2"
+    "is-ip": "2.0.0",
+    "is-url": "1.2.2",
+    "isemail": "2.2.1",
+    "lodash.get": "4.4.2"
   },
   "devDependencies": {
-    "coveralls": "^2.12.0",
-    "eslint": "^3.16.1",
-    "husky": "^0.13.2",
-    "mocha": "^3.2.0",
-    "mocha-lcov-reporter": "^1.3.0",
-    "nyc": "^10.1.2",
-    "should": "^11.2.0",
-    "sinon": "^2.1.0",
-    "tslint": "^5.1.0",
-    "typescript": "^2.2.2"
+    "coveralls": "2.12.0",
+    "eslint": "7.30.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-config-validator": "git+https://github.com/ilya-markevich/eslint-configs.git#1.0.7",
+    "mocha": "3.2.0",
+    "mocha-lcov-reporter": "1.3.0",
+    "nyc": "10.1.2",
+    "prettier": "2.3.2",
+    "prettier-config-knowledge-base": "git+https://github.com/ilya-markevich/prettier-config.git#1.0.0",
+    "should": "11.2.0",
+    "sinon": "2.1.0",
+    "tslint": "5.1.0",
+    "typescript": "2.2.2"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=14.0.0"
   }
 }

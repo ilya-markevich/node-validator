@@ -1,20 +1,22 @@
-'use strict';
+"use strict";
 
-const BaseFieldValidator = require('./base');
+const BaseFieldValidator = require("./base");
 
 class IsNumericString extends BaseFieldValidator {
   constructor() {
-    super('isNumericString');
+    super("isNumericString");
 
-    this.regexp = /^[0-9]+$/;
+    this.regexp = /^[0-9]+$/u;
   }
 
   execute(value) {
-    return typeof value === 'string' && value.length > 0 && this.regexp.test(value);
+    return (
+      typeof value === "string" && value.length > 0 && this.regexp.test(value)
+    );
   }
 
   getErrorMessage() {
-    return 'should be a string that contains only numbers';
+    return "should be a string that contains only numbers";
   }
 }
 

@@ -1,39 +1,30 @@
-'use strict';
+"use strict";
 
-function generateExecuteData(isCorrect, value, opts) {
-  return {
-    isCorrect,
-    value,
-    opts
-  };
-}
+const generateExecuteData = (isCorrect, value, opts) => ({
+  isCorrect,
+  value,
+  opts,
+});
 
-function generateErrorMessageData(errorMessage, opts) {
-  return {
-    opts,
-    errorMessage
-  };
-}
+const generateErrorMessageData = (errorMessage, opts) => ({
+  opts,
+  errorMessage,
+});
 
-function generateIntegrationTestCase(validatorName, value, opts, errorMessage) {
-  return {
+const generateIntegrationTestCase =
+  (validatorName) => (value, opts, errorMessage) => ({
     obj: {
-      test: value
+      test: value,
     },
     validatorName,
     opts,
-    errors: errorMessage ? [
-      {
-        path: 'test',
-        value,
-        errorMessage: `test ${errorMessage}`
-      }
-    ] : []
-  };
-}
+    errors: errorMessage
+      ? [{ path: "test", value, errorMessage: `test ${errorMessage}` }]
+      : [],
+  });
 
 module.exports = {
   generateExecuteData,
   generateErrorMessageData,
-  generateIntegrationTestCase
+  generateIntegrationTestCase,
 };

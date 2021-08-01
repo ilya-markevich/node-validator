@@ -1,10 +1,14 @@
-'use strict';
+"use strict";
 
-const validatorName = 'isArray';
-const generateTest = require('../../helpers/generateFieldValidatorData').generateIntegrationTestCase.bind(null, validatorName);
+const {
+  generateIntegrationTestCase,
+} = require("../../helpers/generateFieldValidatorData");
+
+const validatorName = "isArray";
+const generateTest = generateIntegrationTestCase(validatorName);
 
 module.exports = [
   generateTest([]),
-  generateTest('test', null, 'should be an array'),
-  generateTest(['test'])
+  generateTest("test", null, "should be an array"),
+  generateTest(["test"]),
 ];
