@@ -12,7 +12,7 @@
 Validator for NodeJS.
 
 # Table of contents
-* [V1.x](#migrate-from-v1x)
+* [Migration to v2](#migration-to-v2)
 * [Usage](#usage)
 * [API](#api)
   - [Validator](#validator)
@@ -30,10 +30,10 @@ Validator for NodeJS.
 * [What's in a name?](#whats-in-a-name)
 * [Author](#author)
 
-# Migrate from V1.x
+# Migration to v2
 
-The [v1.x version](https://github.com/ilya-markevich/node-validator/tree/v1.1.1) doesn't support async validators so all API is synchronous.
-For migration to V2, await `getErrors` and `hasErrors` methods.
+The [v1](https://github.com/ilya-markevich/node-validator/tree/v1.1.1) doesn't support async validators so all API is synchronous.
+For migration to v2, await `getErrors` and `hasErrors` methods.
 
 # Usage
 
