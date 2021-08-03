@@ -24,15 +24,18 @@ class Validator {
     return state;
   }
 
-  hasErrors() {
-    const errors = this.getErrors();
+  async hasErrors() {
+    const errors = await this.getErrors();
 
     return errors.length > 0;
   }
 
-  getErrors() {
-    return this._states
-      .map((state) => state.getInfo())
+  async getErrors() {
+    const statesInfo = await Promise.all(
+      this._states.map((state) => state.getInfo())
+    );
+
+    return statesInfo
       .filter((stateInfo) => !stateInfo.isCorrect)
       .map((stateInfo) => {
         delete stateInfo.isCorrect;

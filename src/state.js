@@ -26,9 +26,12 @@ class ValidationState {
     return this;
   }
 
-  getInfo() {
+  async getInfo() {
     const { pathToProp, customMessage, checks } = this;
-    const incorrectChecks = checks.filter((check) => !check.isCorrect);
+    const checksResults = await Promise.all(
+      checks.map((execCheck) => execCheck())
+    );
+    const incorrectChecks = checksResults.filter((check) => !check.isCorrect);
     const result = {
       path: pathToProp,
       value: this._getValue(),
@@ -60,7 +63,7 @@ class ValidationState {
       if (this.isOptional && (value === null || value === undefined)) {
         this.checks = [];
       } else {
-        this.checks.push(fieldValidator.check(value, ...opts));
+        this.checks.push(() => fieldValidator.check(value, ...opts));
       }
 
       return this;

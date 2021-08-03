@@ -20,7 +20,7 @@ describe("Base Field Validator", () => {
   });
 
   describe("#check", () => {
-    it("should check and return that value is incorrect", () => {
+    it("should check and return that value is incorrect", async () => {
       const {
         name,
         defaultOpts,
@@ -38,13 +38,13 @@ describe("Base Field Validator", () => {
         .returns(false);
       validator.getErrorMessage = sinon.mock().once().returns(errorMessage);
 
-      validator
-        .check(value, opts)
-        .should.have.properties(expectedIncorrectCheckResult);
+      (await validator.check(value, opts)).should.have.properties(
+        expectedIncorrectCheckResult
+      );
       validator.getErrorMessage.verify();
     });
 
-    it("should check and return that value is correct", () => {
+    it("should check and return that value is correct", async () => {
       const {
         name,
         defaultOpts,
@@ -61,9 +61,9 @@ describe("Base Field Validator", () => {
         .returns(true);
       validator.getErrorMessage = sinon.mock().never();
 
-      validator
-        .check(value, opts)
-        .should.have.properties(expectedCorrectCheckResult);
+      (await validator.check(value, opts)).should.have.properties(
+        expectedCorrectCheckResult
+      );
       validator.getErrorMessage.verify();
     });
   });

@@ -35,7 +35,7 @@ describe("Validator Integration Tests", () => {
       }
     });
 
-    it("should add custom fields validators and use them", () => {
+    it("should add custom fields validators and use them", async () => {
       const {
         objectForCustomValidator,
         customValidatorErrors,
@@ -45,7 +45,7 @@ describe("Validator Integration Tests", () => {
 
       Validator.extend({
         isTest: {
-          execute: (value) => value === "test",
+          execute: (value) => Promise.resolve(value === "test"),
           getErrorMessage: () => isTestValidatorErrorMessage,
         },
         isTest2: {
@@ -57,13 +57,13 @@ describe("Validator Integration Tests", () => {
 
       validator.property("field2").isTest2();
 
-      validator.hasErrors().should.be.eql(true);
-      validator.getErrors().should.be.eql(customValidatorErrors);
+      (await validator.hasErrors()).should.be.eql(true);
+      (await validator.getErrors()).should.be.eql(customValidatorErrors);
     });
   });
 
   describe("Validation", () => {
-    it("should validate object with custom error message for field", () => {
+    it("should validate object with custom error message for field", async () => {
       const { objectToValidate, customErrorMessage, customErrorResults } =
         testData;
       const validator = new Validator(objectToValidate);
@@ -80,8 +80,8 @@ describe("Validator Integration Tests", () => {
         })
         .withMessage(customErrorMessage);
 
-      validator.hasErrors().should.be.eql(true);
-      validator.getErrors().should.be.eql(customErrorResults);
+      (await validator.hasErrors()).should.be.eql(true);
+      (await validator.getErrors()).should.be.eql(customErrorResults);
     });
   });
 });

@@ -41,42 +41,42 @@ describe("Validator", () => {
   });
 
   describe("#hasErrors", () => {
-    it("should return that validator has errors", () => {
+    it("should return that validator has errors", async () => {
       const { objectToValidate, stateWithError } = testData;
       const validator = new Validator(objectToValidate);
 
       validator._states.push(stateWithError);
 
-      validator.hasErrors().should.be.eql(true);
+      (await validator.hasErrors()).should.be.eql(true);
     });
 
-    it("should return that validator has no errors", () => {
+    it("should return that validator has no errors", async () => {
       const { objectToValidate, stateWithoutError } = testData;
       const validator = new Validator(objectToValidate);
 
       validator._states.push(stateWithoutError);
 
-      validator.hasErrors().should.be.eql(false);
+      (await validator.hasErrors()).should.be.eql(false);
     });
   });
 
   describe("#getErrors", () => {
-    it("should return errors", () => {
+    it("should return errors", async () => {
       const { objectToValidate, stateWithError, validatorErrors } = testData;
       const validator = new Validator(objectToValidate);
 
       validator._states.push(stateWithError);
 
-      validator.getErrors().should.be.eql(validatorErrors);
+      (await validator.getErrors()).should.be.eql(validatorErrors);
     });
 
-    it("should not return errors", () => {
+    it("should not return errors", async () => {
       const { objectToValidate, stateWithoutError } = testData;
       const validator = new Validator(objectToValidate);
 
       validator._states.push(stateWithoutError);
 
-      validator.getErrors().should.have.length(0);
+      (await validator.getErrors()).should.have.length(0);
     });
   });
 });

@@ -38,27 +38,28 @@ describe("Validator state", () => {
   });
 
   describe("#getInfo", () => {
-    it("should get validator state info without errors", () => {
+    it("should get validator state info without errors", async () => {
       const { path, obj, expectedInfoWithoutErrors } = testData;
       const state = new ValidatorState(path, obj);
-      const info = state.getInfo();
+      const info = await state.getInfo();
 
       info.should.have.properties(expectedInfoWithoutErrors);
     });
 
-    it("should get validator state with errors", () => {
+    it("should get validator state with errors", async () => {
       const { path, obj, checkInfoWithError, expectedInfoWithErrors } =
         testData;
       const state = new ValidatorState(path, obj);
 
-      state.checks.push(checkInfoWithError);
+      // eslint-disable-next-line max-nested-callbacks
+      state.checks.push(() => checkInfoWithError);
 
-      const info = state.getInfo();
+      const info = await state.getInfo();
 
       info.should.have.properties(expectedInfoWithErrors);
     });
 
-    it("should get validator state with error and custom error message", () => {
+    it("should get validator state with error and custom error message", async () => {
       const {
         path,
         obj,
@@ -68,10 +69,11 @@ describe("Validator state", () => {
       } = testData;
       const state = new ValidatorState(path, obj);
 
-      state.checks.push(checkInfoWithError);
+      // eslint-disable-next-line max-nested-callbacks
+      state.checks.push(() => checkInfoWithError);
       state.withMessage(customMessage);
 
-      const info = state.getInfo();
+      const info = await state.getInfo();
 
       info.should.have.properties(expectedInfoWithErrorsAndCustomMessage);
     });
@@ -101,7 +103,7 @@ describe("Validator state", () => {
         state[validator.name](newValidatorOpts);
 
         state.checks.should.have.length(1);
-        state.checks[0].should.be.eql(newValidatorResult);
+        state.checks[0]();
         validator.check.verify();
       });
 

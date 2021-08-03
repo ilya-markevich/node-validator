@@ -13,13 +13,13 @@ module.exports = (validator) => {
 
       it(`should ${
         errors.length === 0 ? "not " : ""
-      }get errors for test with options = ${optsString}`, () => {
+      }get errors for test with options = ${optsString}`, async () => {
         const validatorObj = new Validator(obj);
 
         validatorObj.property("test")[validatorName](opts);
 
-        validatorObj.hasErrors().should.be.eql(errors.length > 0);
-        validatorObj.getErrors().should.be.eql(errors);
+        (await validatorObj.hasErrors()).should.be.eql(errors.length > 0);
+        (await validatorObj.getErrors()).should.be.eql(errors);
       });
     });
   });

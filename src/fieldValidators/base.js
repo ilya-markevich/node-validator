@@ -8,10 +8,10 @@ class BaseFieldValidator {
     this.defaultOpts = defaultOpts;
   }
 
-  check(value, opts) {
+  async check(value, opts) {
     const options = this._getOptions(opts);
 
-    const isCorrect = this.execute(value, options);
+    const isCorrect = await this.execute(value, options);
     const result = { isCorrect };
 
     if (!isCorrect) {
