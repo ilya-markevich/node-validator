@@ -32,7 +32,7 @@ Validator for NodeJS.
 
 # Migration to v2
 
-The [v1](https://github.com/ilya-markevich/node-validator/tree/v1.1.1) doesn't support async validators so all API is synchronous.
+The [v1](https://github.com/ilya-markevich/node-validator/tree/v1.1.1) doesn't support async validators meaning the API is synchronous.
 For migration to v2, await `getErrors` and `hasErrors` methods.
 
 # Usage
