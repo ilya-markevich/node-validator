@@ -8,3 +8,5 @@ coverage
 .travis.yml
 tsconfig.json
 npm-debug.log
+.github
+scripts
