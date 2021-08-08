@@ -1,4 +1,4 @@
-name: Esling configs build
+name: Build
 on:
     push:
         branches:
