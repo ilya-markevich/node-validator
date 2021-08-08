@@ -1,24 +1,22 @@
-'use strict';
+"use strict";
 
-const BaseFieldValidator = require('./base');
+const BaseFieldValidator = require("./base");
 
 class IsBoolean extends BaseFieldValidator {
   constructor() {
-    super('isBoolean', {
-      convert: true
-    });
+    super("isBoolean", { convert: true });
   }
 
   execute(value, opts) {
-    if (opts.convert && typeof value === 'string') {
-      return value === 'true';
+    if (opts.convert && typeof value === "string") {
+      return value === "true";
     }
 
-    return typeof value === 'boolean';
+    return typeof value === "boolean";
   }
 
   getErrorMessage() {
-    return 'should be a boolean';
+    return "should be a boolean";
   }
 }
 

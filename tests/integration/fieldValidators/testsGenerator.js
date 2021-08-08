@@ -1,22 +1,25 @@
-'use strict';
+"use strict";
 
-const Validator = require('../../../src/validator');
+const Validator = require("../../../src/validator");
 
-module.exports = (validatorName) => {
-  const testCases = require(`../data/${validatorName}`);
+module.exports = (validator) => {
+  const testCases = require(`../data/${validator}`);
 
-  describe(`${validatorName} integration`, () => {
+  describe(`${validator} integration`, () => {
     testCases.forEach((testCase) => {
       const { obj, validatorName, opts, errors } = testCase;
-      const optsString = typeof opts === 'object' ? JSON.stringify(opts) : String(opts);
+      const optsString =
+        typeof opts === "object" ? JSON.stringify(opts) : String(opts);
 
-      it(`should ${errors.length === 0 ? 'not ' : ''}get errors for test with options = ${optsString}`, () => {
-        const validator = new Validator(obj);
+      it(`should ${
+        errors.length === 0 ? "not " : ""
+      }get errors for test with options = ${optsString}`, async () => {
+        const validatorObj = new Validator(obj);
 
-        validator.property('test')[validatorName](opts);
+        validatorObj.property("test")[validatorName](opts);
 
-        validator.hasErrors().should.be.eql(errors.length > 0);
-        validator.getErrors().should.be.eql(errors);
+        (await validatorObj.hasErrors()).should.be.eql(errors.length > 0);
+        (await validatorObj.getErrors()).should.be.eql(errors);
       });
     });
   });

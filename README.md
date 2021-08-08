@@ -12,6 +12,7 @@
 Validator for NodeJS.
 
 # Table of contents
+* [Migration to v2](#migration-to-v2)
 * [Usage](#usage)
 * [API](#api)
   - [Validator](#validator)
@@ -28,6 +29,11 @@ Validator for NodeJS.
 * [Fields validators](#fields-validators)
 * [What's in a name?](#whats-in-a-name)
 * [Author](#author)
+
+# Migration to v2
+
+The [v1](https://github.com/ilya-markevich/node-validator/tree/v1.1.1) doesn't support async validators meaning the API is synchronous.
+For migration to v2, await `getErrors` and `hasErrors` methods.
 
 # Usage
 
@@ -52,8 +58,8 @@ validator.property('field2').isNotEmpty().isInteger({
 
 validator.property('field3').isNotEmpty().isString().withMessage('field3 should be a special string.');
 
-validator.hasErrors(); // true
-validator.getErrors();
+await validator.hasErrors(); // true
+await validator.getErrors();
 // [
 //    { path: 'field1', value: 'test', errorMessage: 'field1 should be equal 1' },
 //    { path: 'field3', value: true, errorMessage: 'field3 should be a special string.' }
@@ -102,10 +108,10 @@ Args:
 * `propertyPath [String]`: path to property in validation object ([lodash.get](https://lodash.com/docs/4.17.4#get) is used to resolve a value)
 
 ### `validatorInstance.hasErrors()`
-Return `true` if validator has errors. In the other case return `false`.
+Return `Promise<true>` if validator has errors. In the other case return `Promise<false>`.
 
 ### `validatorInstance.getErrors()`
-Return all validation errors.
+Return promise with all validation errors.
 
 Example of an error:
 ``` javascript

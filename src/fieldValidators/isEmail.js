@@ -1,23 +1,19 @@
-'use strict';
+"use strict";
 
-/* eslint max-len: "off" */
-
-const isEmail = require('isemail');
-const BaseFieldValidator = require('./base');
+const isEmail = require("isemail");
+const BaseFieldValidator = require("./base");
 
 class IsEmail extends BaseFieldValidator {
   constructor() {
-    super('isEmail');
+    super("isEmail");
   }
 
   execute(value) {
-    return isEmail.validate(String(value), {
-      errorLevel: false
-    });
+    return isEmail.validate(String(value), { errorLevel: false });
   }
 
   getErrorMessage() {
-    return 'should be an email';
+    return "should be an email";
   }
 }
 

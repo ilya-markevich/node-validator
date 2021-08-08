@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
-const BaseFieldValidator = require('./base');
+const BaseFieldValidator = require("./base");
 
 class IsJsonString extends BaseFieldValidator {
   constructor() {
-    super('isJsonString');
+    super("isJsonString");
   }
 
   execute(value) {
-    const isString = typeof value === 'string';
+    const isString = typeof value === "string";
 
     try {
       JSON.parse(value);
@@ -20,7 +20,7 @@ class IsJsonString extends BaseFieldValidator {
   }
 
   getErrorMessage() {
-    return 'should be a valid json string';
+    return "should be a valid json string";
   }
 }
 

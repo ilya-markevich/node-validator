@@ -1,35 +1,39 @@
-'use strict';
+"use strict";
 
-const BaseFieldValidator = require('./base');
+const BaseFieldValidator = require("./base");
 
 class IsDate extends BaseFieldValidator {
   constructor() {
-    super('isDate', {});
+    super("isDate", {});
   }
 
   execute(value, opts) {
     const { before, after } = opts;
-    const isDate = (new Date(value)).toString() !== 'Invalid Date';
+    const isDate = new Date(value).toString() !== "Invalid Date";
 
-    if (value instanceof Date || (typeof value === 'string' && isDate)) {
+    if (value instanceof Date || (typeof value === "string" && isDate)) {
       const dateValue = new Date(value);
 
-      return this._getRangeExecution({
-        min: after && new Date(after),
-        max: before && new Date(before)
-      }, dateValue);
-    } else {
-      return false;
+      return this._getRangeExecution(
+        {
+          min: after && new Date(after),
+          max: before && new Date(before),
+        },
+        dateValue
+      );
     }
+
+    return false;
   }
 
   getErrorMessage(opts) {
     const { before, after } = opts;
-
-    return `should be a date${this._getRangeErrorMessage({
+    const rangeMessage = this._getRangeErrorMessage({
       min: after,
-      max: before
-    })}`;
+      max: before,
+    });
+
+    return `should be a date${rangeMessage}`;
   }
 }
 

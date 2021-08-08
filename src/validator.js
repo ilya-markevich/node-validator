@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-const State = require('./state');
-const BaseFieldValidator = require('./fieldValidators/base');
+const State = require("./state");
+const BaseFieldValidator = require("./fieldValidators/base");
 
 class Validator {
   constructor(objToValidate) {
@@ -20,42 +20,47 @@ class Validator {
     const state = new StateConstructor(path, _objToValidate);
 
     _states.push(state);
+
     return state;
   }
 
-  hasErrors() {
-    const errors = this.getErrors();
+  async hasErrors() {
+    const errors = await this.getErrors();
 
     return errors.length > 0;
   }
 
-  getErrors() {
-    return this._states.map(state => state.getInfo()).filter(stateInfo => !stateInfo.isCorrect).map((stateInfo) => {
-      delete stateInfo.isCorrect;
-      return stateInfo;
-    });
+  async getErrors() {
+    const statesInfo = await Promise.all(
+      this._states.map((state) => state.getInfo())
+    );
+
+    return statesInfo
+      .filter((stateInfo) => !stateInfo.isCorrect)
+      .map((stateInfo) => {
+        delete stateInfo.isCorrect;
+
+        return stateInfo;
+      });
   }
 
-  static extend(objWithMethods) {
-    Object.keys(Object(objWithMethods)).forEach(methodName => Validator._checkCustomValidator(objWithMethods[methodName]));
+  static extend(customValidators) {
+    Object.keys(Object(customValidators)).forEach((validatorName) =>
+      Validator._checkCustomValidator(customValidators[validatorName])
+    );
 
-    Object.keys(Object(objWithMethods)).forEach((methodName) => {
-      const customValidator = objWithMethods[methodName];
+    Object.keys(Object(customValidators)).forEach((validatorName) => {
+      const customValidator = customValidators[validatorName];
+      const defaultGetErrorMessage = () =>
+        `should pass ${validatorName} validation`;
+
       const fieldValidator = Object.create(BaseFieldValidator.prototype, {
-        name: {
-          value: methodName
-        },
-        defaultOpts: {
-          value: customValidator.defaultOpts
-        },
-        execute: {
-          value: customValidator.execute
-        },
+        name: { value: validatorName },
+        defaultOpts: { value: customValidator.defaultOpts },
+        execute: { value: customValidator.execute },
         getErrorMessage: {
-          value: customValidator.getErrorMessage || function () {
-            return `should pass ${this.name} validation`;
-          }
-        }
+          value: customValidator.getErrorMessage || defaultGetErrorMessage,
+        },
       });
 
       State.applyFieldValidator(fieldValidator);
@@ -63,11 +68,14 @@ class Validator {
   }
 
   static _checkCustomValidator(validator) {
-    if (typeof validator.execute !== 'function') {
+    if (typeof validator.execute !== "function") {
       throw new Error('"execute" property should be function.');
     }
 
-    if (validator.getErrorMessage && typeof validator.getErrorMessage !== 'function') {
+    if (
+      validator.getErrorMessage &&
+      typeof validator.getErrorMessage !== "function"
+    ) {
       throw new Error('"getErrorMessage" property should be function.');
     }
   }

@@ -5,22 +5,22 @@ declare class Validator {
 
   public property(path: string): Validator.State;
 
-  public hasErrors(): boolean;
+  public hasErrors(): Promise<boolean>;
 
-  public getErrors(): Validator.ValidationError[];
+  public getErrors(): Promise<Validator.ValidationError[]>;
 
   public extend(validators: Validator.ValidatorsObject): void;
 }
 
 declare namespace Validator {
   export interface ValidationError {
-    path: string,
-    value: any,
-    errorMessage: string | null
+    path: string;
+    value: any;
+    errorMessage: string | null;
   }
 
   export interface ValidatorsObject {
-    [propName: string]: FieldValidator
+    [propName: string]: FieldValidator;
   }
 
   export interface State {
@@ -30,13 +30,13 @@ declare namespace Validator {
 
     isArray(): State;
 
-    isArrayLength(options?: { min?: number, max?: number }): State;
+    isArrayLength(options?: { min?: number; max?: number }): State;
 
     isBase64String(): State;
 
     isBoolean(options?: { convert?: boolean }): State;
 
-    isDate(options?: { before?: Date | string, after?: Date | string }): State;
+    isDate(options?: { before?: Date | string; after?: Date | string }): State;
 
     isEachIn(inArray: any[]): State;
 
@@ -44,17 +44,21 @@ declare namespace Validator {
 
     isEqual(equalTo: any): State;
 
-    isFloat(options?: { min?: number, max?: number, convert?: boolean }): State;
+    isFloat(options?: { min?: number; max?: number; convert?: boolean }): State;
 
     isIn(inArray: any[]): State;
 
-    isInteger(options?: { min?: number, max?: number, convert?: boolean }): State;
+    isInteger(options?: {
+      min?: number;
+      max?: number;
+      convert?: boolean;
+    }): State;
 
-    isIpString(options?: { v4?: boolean, v6?: boolean }): State;
+    isIpString(options?: { v4?: boolean; v6?: boolean }): State;
 
     isJsonString(): State;
 
-    isLength(options?: { min?: number, max?: number }): State;
+    isLength(options?: { min?: number; max?: number }): State;
 
     isLowerCaseString(): State;
 
@@ -74,9 +78,9 @@ declare namespace Validator {
   }
 
   interface FieldValidator {
-    execute: (value: any, opts?: any) => boolean,
-    defaultOpts?: object,
-    getErrorMessage?: (opts?: any) => string
+    execute: (value: any, opts?: any) => boolean | Promise<boolean>;
+    defaultOpts?: object;
+    getErrorMessage?: (opts?: any) => string;
   }
 }
 

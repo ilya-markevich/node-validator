@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-const BaseFieldValidator = require('./base');
-const isIp = require('is-ip');
+const BaseFieldValidator = require("./base");
+const isIp = require("is-ip");
 
 class IsIpString extends BaseFieldValidator {
   constructor() {
-    super('isIpString', {});
+    super("isIpString", {});
   }
 
   execute(value, opts) {
@@ -20,19 +20,19 @@ class IsIpString extends BaseFieldValidator {
       isCorrectIp = isIp.v6(value);
     }
 
-    return typeof value === 'string' && isCorrectIp;
+    return typeof value === "string" && isCorrectIp;
   }
 
   getErrorMessage(opts) {
     const { v4, v6 } = opts;
 
-    if (!v4 && !v6 || v4 && v6) {
-      return 'should be an ip string';
+    if ((!v4 && !v6) || (v4 && v6)) {
+      return "should be an ip string";
     } else if (v4) {
-      return 'should be an ipv4 string';
-    } else {
-      return 'should be an ipv6 string';
+      return "should be an ipv4 string";
     }
+
+    return "should be an ipv6 string";
   }
 }
 

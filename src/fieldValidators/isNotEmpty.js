@@ -1,22 +1,22 @@
-'use strict';
+"use strict";
 
-const BaseFieldValidator = require('./base');
+const BaseFieldValidator = require("./base");
 
 class NotEmpty extends BaseFieldValidator {
   constructor() {
-    super('isNotEmpty');
+    super("isNotEmpty");
   }
 
   execute(value) {
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
       return value.length > 0;
-    } else {
-      return value !== undefined && value !== null;
     }
+
+    return value !== undefined && value !== null;
   }
 
   getErrorMessage() {
-    return 'should be not empty';
+    return "should be not empty";
   }
 }
 

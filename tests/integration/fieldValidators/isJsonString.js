@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-require('should');
+require("should");
 
-const testsGenerator = require('./testsGenerator');
+const testsGenerator = require("./testsGenerator");
 
-testsGenerator('isJsonString');
+testsGenerator("isJsonString");

@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-const BaseFieldValidator = require('./base');
+const BaseFieldValidator = require("./base");
 
 class IsArray extends BaseFieldValidator {
   constructor() {
-    super('isArray');
+    super("isArray");
   }
 
   execute(value) {
@@ -12,7 +12,7 @@ class IsArray extends BaseFieldValidator {
   }
 
   getErrorMessage() {
-    return 'should be an array';
+    return "should be an array";
   }
 }
 

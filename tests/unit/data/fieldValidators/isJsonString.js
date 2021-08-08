@@ -1,20 +1,23 @@
-'use strict';
+"use strict";
 
-const { generateExecuteData, generateErrorMessageData } = require('../../../helpers/generateFieldValidatorData');
+const {
+  generateExecuteData,
+  generateErrorMessageData,
+} = require("../../../helpers/generateFieldValidatorData");
 
 const executeTestCases = [
-  generateExecuteData(false, ''),
+  generateExecuteData(false, ""),
   generateExecuteData(false, undefined),
   generateExecuteData(true, '{ "test": 2 }'),
-  generateExecuteData(false, '{'),
-  generateExecuteData(false, 0)
+  generateExecuteData(false, "{"),
+  generateExecuteData(false, 0),
 ];
 
 const errorMessageTestCases = [
-  generateErrorMessageData('should be a valid json string')
+  generateErrorMessageData("should be a valid json string"),
 ];
 
 module.exports = {
   executeTestCases,
-  errorMessageTestCases
+  errorMessageTestCases,
 };

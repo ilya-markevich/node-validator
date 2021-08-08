@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-const BaseFieldValidator = require('./base');
+const BaseFieldValidator = require("./base");
 
 class IsIn extends BaseFieldValidator {
   constructor() {
-    super('isIn', []);
+    super("isIn", []);
   }
 
   execute(value, inArray) {
@@ -12,7 +12,7 @@ class IsIn extends BaseFieldValidator {
   }
 
   getErrorMessage(inArray) {
-    return `should be in [${inArray.map(String).join(', ')}]`;
+    return `should be in [${inArray.map(String).join(", ")}]`;
   }
 }
 

@@ -1,20 +1,20 @@
-'use strict';
+"use strict";
 
-const BaseFieldValidator = require('./base');
+const BaseFieldValidator = require("./base");
 
 class IsEachIn extends BaseFieldValidator {
   constructor() {
-    super('isEachIn', []);
+    super("isEachIn", []);
   }
 
   execute(values, inArray) {
-    return Array.isArray(values) && values.reduce((result, value) => {
-      return result && inArray.includes(value);
-    }, true);
+    return (
+      Array.isArray(values) && values.every((value) => inArray.includes(value))
+    );
   }
 
   getErrorMessage(inArray) {
-    return `each value should be in [${inArray.map(String).join(', ')}]`;
+    return `each value should be in [${inArray.map(String).join(", ")}]`;
   }
 }
 

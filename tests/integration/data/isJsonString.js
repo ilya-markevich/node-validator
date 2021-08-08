@@ -1,13 +1,17 @@
-'use strict';
+"use strict";
 
-const validatorName = 'isJsonString';
-const errorMessage = 'should be a valid json string';
+const {
+  generateIntegrationTestCase,
+} = require("../../helpers/generateFieldValidatorData");
 
-const generateTest = require('../../helpers/generateFieldValidatorData').generateIntegrationTestCase.bind(null, validatorName);
+const validatorName = "isJsonString";
+const errorMessage = "should be a valid json string";
+
+const generateTest = generateIntegrationTestCase(validatorName);
 
 module.exports = [
   generateTest(true, null, errorMessage),
   generateTest('{ "test": 2 }'),
-  generateTest('test', null, errorMessage),
-  generateTest(0, null, errorMessage)
+  generateTest("test", null, errorMessage),
+  generateTest(0, null, errorMessage),
 ];

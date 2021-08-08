@@ -1,13 +1,12 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
-
-const get = require('lodash.get');
+const fs = require("fs");
+const path = require("path");
+const get = require("lodash.get");
 
 class ValidationState {
-  constructor(path, obj) {
-    this.path = path;
+  constructor(pathToProp, obj) {
+    this.pathToProp = pathToProp;
     this.obj = obj;
 
     this.isOptional = false;
@@ -16,68 +15,74 @@ class ValidationState {
   }
 
   optional() {
-    const self = this;
+    this.isOptional = true;
 
-    self.isOptional = true;
-    return self;
+    return this;
   }
 
   withMessage(message) {
-    const self = this;
+    this.customMessage = message;
 
-    self.customMessage = message;
-    return self;
+    return this;
   }
 
-  getInfo() {
-    const self = this;
-    const { path, customMessage, checks } = self;
-    const incorrectChecks = checks.filter(check => !check.isCorrect);
+  async getInfo() {
+    const { pathToProp, customMessage, checks } = this;
+    const checksResults = await Promise.all(
+      checks.map((execCheck) => execCheck())
+    );
+    const incorrectChecks = checksResults.filter((check) => !check.isCorrect);
     const result = {
-      path,
-      value: self._getValue(),
+      path: pathToProp,
+      value: this._getValue(),
       isCorrect: incorrectChecks.length === 0,
-      errorMessage: null
+      errorMessage: null,
     };
 
     if (incorrectChecks.length > 0) {
-      const errorMessage = incorrectChecks.map(check => check.errorMessage).join('; ');
+      const errorMessage = incorrectChecks
+        .map((check) => check.errorMessage)
+        .join("; ");
 
-      result.errorMessage = customMessage || `${path} ${errorMessage}`;
+      result.errorMessage = customMessage || `${pathToProp} ${errorMessage}`;
     }
 
     return result;
   }
 
   _getValue() {
-    const { path, obj } = this;
+    const { pathToProp, obj } = this;
 
-    return get(obj, path);
+    return get(obj, pathToProp);
   }
 
   static applyFieldValidator(fieldValidator) {
     ValidationState.prototype[fieldValidator.name] = function (...opts) {
-      const self = this;
-      const value = self._getValue();
+      const value = this._getValue();
 
-      if (self.isOptional && (value === null || value === undefined)) {
-        self.checks = [];
+      if (this.isOptional && (value === null || value === undefined)) {
+        this.checks = [];
       } else {
-        self.checks.push(fieldValidator.check(value, ...opts));
+        this.checks.push(() => fieldValidator.check(value, ...opts));
       }
 
-      return self;
+      return this;
     };
   }
 
   static _applyDefaultValidators() {
-    const fieldValidatorsPath = path.join(__dirname, 'fieldValidators');
+    const fieldValidatorsPath = path.join(__dirname, "fieldValidators");
 
-    fs.readdirSync(fieldValidatorsPath).filter(f => !f.startsWith('base')).forEach((fileName) => {
-      const fieldValidator = require(path.join(fieldValidatorsPath, fileName));
+    fs.readdirSync(fieldValidatorsPath)
+      .filter((f) => !f.startsWith("base"))
+      .forEach((fileName) => {
+        const fieldValidator = require(path.join(
+          fieldValidatorsPath,
+          fileName
+        ));
 
-      ValidationState.applyFieldValidator(fieldValidator);
-    });
+        ValidationState.applyFieldValidator(fieldValidator);
+      });
   }
 }
 
