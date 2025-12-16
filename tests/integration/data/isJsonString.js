@@ -1,17 +1,12 @@
-"use strict";
+import { generateIntegrationTestCase } from '../../helpers/generateFieldValidatorData';
 
-const {
-  generateIntegrationTestCase,
-} = require("../../helpers/generateFieldValidatorData");
+const errorMessage = 'should be a valid json string';
 
-const validatorName = "isJsonString";
-const errorMessage = "should be a valid json string";
+const generateTest = generateIntegrationTestCase({ validatorName: 'isJsonString' });
 
-const generateTest = generateIntegrationTestCase(validatorName);
-
-module.exports = [
-  generateTest(true, null, errorMessage),
-  generateTest('{ "test": 2 }'),
-  generateTest("test", null, errorMessage),
-  generateTest(0, null, errorMessage),
+export default [
+  generateTest({ valueToTest: true, errorMessage }),
+  generateTest({ valueToTest: '{ "test": 2 }' }),
+  generateTest({ valueToTest: 'test', errorMessage }),
+  generateTest({ valueToTest: 0, errorMessage })
 ];

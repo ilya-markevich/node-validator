@@ -1,23 +1,21 @@
-"use strict";
-
-const {
+import {
   generateExecuteData,
-  generateErrorMessageData,
-} = require("../../../helpers/generateFieldValidatorData");
+  generateErrorMessageData
+} from '../../../helpers/generateFieldValidatorData';
 
 const executeTestCases = [
-  generateExecuteData(false, "Test"),
-  generateExecuteData(false, undefined),
-  generateExecuteData(true, ""),
-  generateExecuteData(true, "test string"),
-  generateExecuteData(false, 0),
+  generateExecuteData({ isCorrect: false, value: 'Test' }),
+  generateExecuteData({ isCorrect: false, value: undefined }),
+  generateExecuteData({ isCorrect: true, value: '' }),
+  generateExecuteData({ isCorrect: true, value: 'test string' }),
+  generateExecuteData({ isCorrect: false, value: 0 })
 ];
 
 const errorMessageTestCases = [
-  generateErrorMessageData("should be a lower case string"),
+  generateErrorMessageData({ errorMessage: 'should be a lower case string' })
 ];
 
-module.exports = {
+export default {
   executeTestCases,
-  errorMessageTestCases,
+  errorMessageTestCases
 };

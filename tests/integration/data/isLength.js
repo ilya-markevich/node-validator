@@ -1,20 +1,13 @@
-"use strict";
+import { generateIntegrationTestCase } from '../../helpers/generateFieldValidatorData';
 
-const {
-  generateIntegrationTestCase,
-} = require("../../helpers/generateFieldValidatorData");
+const generateTest = generateIntegrationTestCase({ validatorName: 'isLength' });
 
-/* eslint no-magic-numbers: "off" */
-
-const validatorName = "isLength";
-const generateTest = generateIntegrationTestCase(validatorName);
-
-module.exports = [
-  generateTest("test", { min: 1, max: 5 }),
-  generateTest(
-    "test",
-    { min: 5, max: 10 },
-    "should have length between 5 and 10"
-  ),
-  generateTest("test", { min: 1, max: 5 }),
+export default [
+  generateTest({ valueToTest: 'test', opts: { min: 1, max: 5 } }),
+  generateTest({
+    valueToTest: 'test',
+    opts: { min: 5, max: 10 },
+    errorMessage: 'should have length between 5 and 10'
+  }),
+  generateTest({ valueToTest: 'test', opts: { min: 1, max: 5 } })
 ];

@@ -1,17 +1,10 @@
-"use strict";
+import { generateIntegrationTestCase } from '../../helpers/generateFieldValidatorData';
 
-const {
-  generateIntegrationTestCase,
-} = require("../../helpers/generateFieldValidatorData");
+const generateTest = generateIntegrationTestCase({ validatorName: 'isInteger' });
 
-/* eslint no-magic-numbers: "off" */
-
-const validatorName = "isInteger";
-const generateTest = generateIntegrationTestCase(validatorName);
-
-module.exports = [
-  generateTest(1),
-  generateTest("1"),
-  generateTest("test", null, "should be an integer more than 0"),
-  generateTest(2, { min: 1, max: 3 }),
+export default [
+  generateTest({ valueToTest: 1 }),
+  generateTest({ valueToTest: '1' }),
+  generateTest({ valueToTest: 'test', errorMessage: 'should be an integer more than 0' }),
+  generateTest({ valueToTest: 2, opts: { min: 1, max: 3 } })
 ];

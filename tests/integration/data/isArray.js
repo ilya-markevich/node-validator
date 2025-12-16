@@ -1,14 +1,9 @@
-"use strict";
+import { generateIntegrationTestCase } from '../../helpers/generateFieldValidatorData';
 
-const {
-  generateIntegrationTestCase,
-} = require("../../helpers/generateFieldValidatorData");
+const generateTest = generateIntegrationTestCase({ validatorName: 'isArray' });
 
-const validatorName = "isArray";
-const generateTest = generateIntegrationTestCase(validatorName);
-
-module.exports = [
-  generateTest([]),
-  generateTest("test", null, "should be an array"),
-  generateTest(["test"]),
+export default [
+  generateTest({ valueToTest: [] }),
+  generateTest({ valueToTest: 'test', errorMessage: 'should be an array' }),
+  generateTest({ valueToTest: ['test'] })
 ];

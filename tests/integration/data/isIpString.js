@@ -1,15 +1,14 @@
-"use strict";
+import { generateIntegrationTestCase } from '../../helpers/generateFieldValidatorData';
 
-const {
-  generateIntegrationTestCase,
-} = require("../../helpers/generateFieldValidatorData");
+const generateTest = generateIntegrationTestCase({ validatorName: 'isIpString' });
 
-const validatorName = "isIpString";
-const generateTest = generateIntegrationTestCase(validatorName);
-
-module.exports = [
-  generateTest("192.168.1.1", { v6: true }, "should be an ipv6 string"),
-  generateTest("192.168.1.1"),
-  generateTest("test", {}, "should be an ip string"),
-  generateTest(0, { v4: true }, "should be an ipv4 string"),
+export default [
+  generateTest({
+    valueToTest: '192.168.1.1',
+    opts: { v6: true },
+    errorMessage: 'should be an ipv6 string'
+  }),
+  generateTest({ valueToTest: '192.168.1.1' }),
+  generateTest({ valueToTest: 'test', opts: {}, errorMessage: 'should be an ip string' }),
+  generateTest({ valueToTest: 0, opts: { v4: true }, errorMessage: 'should be an ipv4 string' })
 ];

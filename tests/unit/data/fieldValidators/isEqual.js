@@ -1,28 +1,24 @@
-"use strict";
-
-/* eslint no-magic-numbers: "off" */
-
-const {
+import {
   generateExecuteData,
-  generateErrorMessageData,
-} = require("../../../helpers/generateFieldValidatorData");
+  generateErrorMessageData
+} from '../../../helpers/generateFieldValidatorData';
 
 const executeTestCases = [
-  generateExecuteData(true, "test", "test"),
-  generateExecuteData(false, "", " "),
-  generateExecuteData(false, null, undefined),
-  generateExecuteData(true, 1, 1),
-  generateExecuteData(false, 0, 1),
+  generateExecuteData({ isCorrect: true, value: 'test', opts: 'test' }),
+  generateExecuteData({ isCorrect: false, value: '', opts: ' ' }),
+  generateExecuteData({ isCorrect: false, value: null, opts: undefined }),
+  generateExecuteData({ isCorrect: true, value: 1, opts: 1 }),
+  generateExecuteData({ isCorrect: false, value: 0, opts: 1 })
 ];
 
 const errorMessageTestCases = [
-  generateErrorMessageData("should be equal 2", 2),
-  generateErrorMessageData("should be equal null", null),
-  generateErrorMessageData("should be equal undefined", undefined),
-  generateErrorMessageData("should be equal 0", 0),
+  generateErrorMessageData({ errorMessage: 'should be equal 2', opts: 2 }),
+  generateErrorMessageData({ errorMessage: 'should be equal null', opts: null }),
+  generateErrorMessageData({ errorMessage: 'should be equal undefined', opts: undefined }),
+  generateErrorMessageData({ errorMessage: 'should be equal 0', opts: 0 })
 ];
 
-module.exports = {
+export default {
   executeTestCases,
-  errorMessageTestCases,
+  errorMessageTestCases
 };

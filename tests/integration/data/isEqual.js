@@ -1,14 +1,9 @@
-"use strict";
+import { generateIntegrationTestCase } from '../../helpers/generateFieldValidatorData';
 
-const {
-  generateIntegrationTestCase,
-} = require("../../helpers/generateFieldValidatorData");
+const generateTest = generateIntegrationTestCase({ validatorName: 'isEqual' });
 
-const validatorName = "isEqual";
-const generateTest = generateIntegrationTestCase(validatorName);
-
-module.exports = [
-  generateTest("test", "test"),
-  generateTest(null, undefined, "should be equal undefined"),
-  generateTest(0, 0),
+export default [
+  generateTest({ valueToTest: 'test', opts: 'test' }),
+  generateTest({ valueToTest: null, errorMessage: 'should be equal undefined' }),
+  generateTest({ valueToTest: 0, opts: 0 })
 ];

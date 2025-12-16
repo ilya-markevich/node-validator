@@ -1,25 +1,23 @@
-"use strict";
-
-const {
+import {
   generateExecuteData,
-  generateErrorMessageData,
-} = require("../../../helpers/generateFieldValidatorData");
+  generateErrorMessageData
+} from '../../../helpers/generateFieldValidatorData';
 
 const executeTestCases = [
-  generateExecuteData(true, "test", /.*/u),
-  generateExecuteData(true, "test", /te/u),
-  generateExecuteData(false, "test", /abc/u),
-  generateExecuteData(true, "test", /s/u),
+  generateExecuteData({ isCorrect: true, value: 'test', opts: /.*/u }),
+  generateExecuteData({ isCorrect: true, value: 'test', opts: /te/u }),
+  generateExecuteData({ isCorrect: false, value: 'test', opts: /abc/u }),
+  generateExecuteData({ isCorrect: true, value: 'test', opts: /s/u })
 ];
 
 const errorMessageTestCases = [
-  generateErrorMessageData("should match /test/gu", /test/gu),
-  generateErrorMessageData("should match /abc/u", /abc/u),
-  generateErrorMessageData("should match /123/u", /123/u),
-  generateErrorMessageData("should match /t01b/u", /t01b/u),
+  generateErrorMessageData({ errorMessage: 'should match /test/gu', opts: /test/gu }),
+  generateErrorMessageData({ errorMessage: 'should match /abc/u', opts: /abc/u }),
+  generateErrorMessageData({ errorMessage: 'should match /123/u', opts: /123/u }),
+  generateErrorMessageData({ errorMessage: 'should match /t01b/u', opts: /t01b/u })
 ];
 
-module.exports = {
+export default {
   executeTestCases,
-  errorMessageTestCases,
+  errorMessageTestCases
 };

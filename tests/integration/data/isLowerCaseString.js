@@ -1,17 +1,12 @@
-"use strict";
+import { generateIntegrationTestCase } from '../../helpers/generateFieldValidatorData';
 
-const {
-  generateIntegrationTestCase,
-} = require("../../helpers/generateFieldValidatorData");
+const errorMessage = 'should be a lower case string';
 
-const validatorName = "isLowerCaseString";
-const errorMessage = "should be a lower case string";
+const generateTest = generateIntegrationTestCase({ validatorName: 'isLowerCaseString' });
 
-const generateTest = generateIntegrationTestCase(validatorName);
-
-module.exports = [
-  generateTest("test"),
-  generateTest("Test", null, errorMessage),
-  generateTest(0, null, errorMessage),
-  generateTest(undefined, null, errorMessage),
+export default [
+  generateTest({ valueToTest: 'test' }),
+  generateTest({ valueToTest: 'Test', errorMessage }),
+  generateTest({ valueToTest: 0, errorMessage }),
+  generateTest({ valueToTest: undefined, errorMessage })
 ];

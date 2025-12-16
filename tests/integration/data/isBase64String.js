@@ -1,17 +1,12 @@
-"use strict";
+import { generateIntegrationTestCase } from '../../helpers/generateFieldValidatorData';
 
-const {
-  generateIntegrationTestCase,
-} = require("../../helpers/generateFieldValidatorData");
+const errorMessage = 'should be a base64 string';
 
-const validatorName = "isBase64String";
-const errorMessage = "should be a base64 string";
+const generateTest = generateIntegrationTestCase({ validatorName: 'isBase64String' });
 
-const generateTest = generateIntegrationTestCase(validatorName);
-
-module.exports = [
-  generateTest("test"),
-  generateTest("dGVzdHRlc3Q="),
-  generateTest("qweasd", null, errorMessage),
-  generateTest(undefined, null, errorMessage),
+export default [
+  generateTest({ valueToTest: 'test' }),
+  generateTest({ valueToTest: 'dGVzdHRlc3Q=' }),
+  generateTest({ valueToTest: 'qweasd', errorMessage }),
+  generateTest({ valueToTest: undefined, errorMessage })
 ];

@@ -1,17 +1,12 @@
-"use strict";
+import { generateIntegrationTestCase } from '../../helpers/generateFieldValidatorData';
 
-const {
-  generateIntegrationTestCase,
-} = require("../../helpers/generateFieldValidatorData");
+const errorMessage = 'should be a boolean';
 
-const validatorName = "isBoolean";
-const errorMessage = "should be a boolean";
+const generateTest = generateIntegrationTestCase({ validatorName: 'isBoolean' });
 
-const generateTest = generateIntegrationTestCase(validatorName);
-
-module.exports = [
-  generateTest(true),
-  generateTest("true"),
-  generateTest("test", null, errorMessage),
-  generateTest(null, null, errorMessage),
+export default [
+  generateTest({ valueToTest: true }),
+  generateTest({ valueToTest: 'true' }),
+  generateTest({ valueToTest: 'test', errorMessage }),
+  generateTest({ valueToTest: null, errorMessage })
 ];
