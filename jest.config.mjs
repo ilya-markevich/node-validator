@@ -5,6 +5,7 @@ export default {
   transformIgnorePatterns: [],
   moduleFileExtensions: ['js', 'json', 'node'],
   coverageDirectory: 'coverage',
+  collectCoverageFrom: ['src/**/*.js'],
   coverageThreshold: {
     global: {
       branches: 100,

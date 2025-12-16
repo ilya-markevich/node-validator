@@ -23,8 +23,8 @@
   "scripts": {
     "eslint": "eslint src/ tests/",
     "test": "jest",
-    "test:typescript": "tsc",
-    "coverage": "nyc npm test"
+    "coverage": "jest --coverage",
+    "test:typescript": "tsc"
   },
   "dependencies": {
     "is-ip": "5.0.1",
