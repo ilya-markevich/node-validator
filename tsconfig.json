@@ -9,12 +9,11 @@
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "esModuleInterop": true,
     "pretty": true,
     "removeComments": true,
     "strictNullChecks": true,
     "target": "es6"
   },
-  "include": [
-    "tsTests/**/*"
-  ]
+  "include": ["tsTests/**/*"]
 }
