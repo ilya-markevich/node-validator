@@ -1,20 +1,18 @@
-"use strict";
-
-const BaseFieldValidator = require("./base");
-const isUrl = require("is-url");
+import isUrl from 'is-url';
+import BaseFieldValidator from './base';
 
 class IsUrlString extends BaseFieldValidator {
   constructor() {
-    super("isUrlString");
+    super('isUrlString');
   }
 
   execute(value) {
-    return typeof value === "string" && isUrl(value);
+    return typeof value === 'string' && isUrl(value);
   }
 
   getErrorMessage() {
-    return "should be an url string";
+    return 'should be an url string';
   }
 }
 
-module.exports = new IsUrlString();
+export default new IsUrlString();

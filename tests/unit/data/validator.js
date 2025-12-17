@@ -1,37 +1,24 @@
-"use strict";
+import StateConstructor from '../../../src/state';
 
-const StateConstructor = require("../../../src/state");
-
-const objectToValidate = {
-  data: "test data",
-  name: "test name",
-};
+const objectToValidate = { data: 'test data', name: 'test name' };
 const initialState = {
   _states: [],
   _objToValidate: objectToValidate,
-  StateConstructor,
+  StateConstructor
 };
 
-const path = "data";
+const path = 'data';
 const mockStateReturn = {};
 
 const stateWithError = {
   getInfo() {
-    return {
-      isCorrect: false,
-      path,
-      message: "test error",
-    };
-  },
+    return { isCorrect: false, path, message: 'test error' };
+  }
 };
 const stateWithoutError = {
   getInfo() {
-    return {
-      isCorrect: true,
-      path,
-      message: null,
-    };
-  },
+    return { isCorrect: true, path, message: null };
+  }
 };
 
 const validatorErrors = (() => {
@@ -41,12 +28,12 @@ const validatorErrors = (() => {
   return [stateInfo];
 })();
 
-module.exports = {
+export default {
   objectToValidate,
   initialState,
   path,
   mockStateReturn,
   stateWithError,
   stateWithoutError,
-  validatorErrors,
+  validatorErrors
 };

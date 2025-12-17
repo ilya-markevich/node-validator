@@ -1,16 +1,13 @@
-"use strict";
+import { generateIntegrationTestCase } from '../../helpers/generateFieldValidatorData';
 
-/* eslint no-magic-numbers: "off" */
+const generateTest = generateIntegrationTestCase({ validatorName: 'isArrayLength' });
 
-const {
-  generateIntegrationTestCase,
-} = require("../../helpers/generateFieldValidatorData");
-
-const validatorName = "isArrayLength";
-const generateTest = generateIntegrationTestCase(validatorName);
-
-module.exports = [
-  generateTest([]),
-  generateTest([1, 2], { min: 1, max: 3 }),
-  generateTest([1], { min: 2 }, "should have length more than 2"),
+export default [
+  generateTest({ valueToTest: [1, 2, 3] }),
+  generateTest({ valueToTest: [1, 2], opts: { min: 1, max: 3 } }),
+  generateTest({
+    valueToTest: [1],
+    opts: { min: 2 },
+    errorMessage: 'should have length more than 2'
+  })
 ];

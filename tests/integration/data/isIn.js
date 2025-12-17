@@ -1,16 +1,9 @@
-"use strict";
+import { generateIntegrationTestCase } from '../../helpers/generateFieldValidatorData';
 
-const {
-  generateIntegrationTestCase,
-} = require("../../helpers/generateFieldValidatorData");
+const generateTest = generateIntegrationTestCase({ validatorName: 'isIn' });
 
-/* eslint no-magic-numbers: "off" */
-
-const validatorName = "isIn";
-const generateTest = generateIntegrationTestCase(validatorName);
-
-module.exports = [
-  generateTest(1, [1, 2]),
-  generateTest(2, [1], "should be in [1]"),
-  generateTest("test", ["test", "test2"]),
+export default [
+  generateTest({ valueToTest: 1, opts: [1, 2] }),
+  generateTest({ valueToTest: 2, opts: [1], errorMessage: 'should be in [1]' }),
+  generateTest({ valueToTest: 'test', opts: ['test', 'test2'] })
 ];

@@ -1,23 +1,19 @@
-"use strict";
+import BaseFieldValidator from './base';
 
-const BaseFieldValidator = require("./base");
 const isValidRangeValue = (value) => Number.isFinite(value);
 
 class IsFloat extends BaseFieldValidator {
   constructor() {
-    super("isFloat", { min: 0, convert: true });
+    super('isFloat', { min: 0, convert: true });
 
-    this.floatRegexp =
-      /^(?:[-+])?(?:[0-9]+)?(?:\.[0-9]*)?(?:[eE][+-]?(?:[0-9]+))?$/u;
+    this.floatRegexp = /^(?:[-+])?(?:[0-9]+)?(?:\.[0-9]*)?(?:[eE][+-]?(?:[0-9]+))?$/u;
   }
 
   execute(value, opts) {
     const isFloatString = this.floatRegexp.test(value.toString());
+    const shouldTryToConvert = opts.convert && typeof value === 'string';
 
-    if (
-      isFloatString &&
-      (typeof value === "number" || (opts.convert && typeof value === "string"))
-    ) {
+    if (isFloatString && (typeof value === 'number' || shouldTryToConvert)) {
       return this._getRangeExecution(opts, value, isValidRangeValue);
     }
 
@@ -31,4 +27,4 @@ class IsFloat extends BaseFieldValidator {
   }
 }
 
-module.exports = new IsFloat();
+export default new IsFloat();

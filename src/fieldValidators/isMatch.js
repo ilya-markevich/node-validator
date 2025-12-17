@@ -1,14 +1,12 @@
-"use strict";
-
-const BaseFieldValidator = require("./base");
+import BaseFieldValidator from './base';
 
 class IsMatch extends BaseFieldValidator {
   constructor() {
-    super("isMatch", /.*/u);
+    super('isMatch', /.*/u);
   }
 
   execute(value, regexp) {
-    return typeof value === "string" && regexp.test(value);
+    return typeof value === 'string' && regexp.test(value);
   }
 
   getErrorMessage(regexp) {
@@ -16,4 +14,4 @@ class IsMatch extends BaseFieldValidator {
   }
 }
 
-module.exports = new IsMatch();
+export default new IsMatch();

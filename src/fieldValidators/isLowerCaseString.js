@@ -1,19 +1,17 @@
-"use strict";
-
-const BaseFieldValidator = require("./base");
+import BaseFieldValidator from './base';
 
 class IsLowerCaseString extends BaseFieldValidator {
   constructor() {
-    super("isLowerCaseString");
+    super('isLowerCaseString');
   }
 
   execute(value) {
-    return typeof value === "string" && value === value.toLowerCase();
+    return typeof value === 'string' && value === value.toLowerCase();
   }
 
   getErrorMessage() {
-    return "should be a lower case string";
+    return 'should be a lower case string';
   }
 }
 
-module.exports = new IsLowerCaseString();
+export default new IsLowerCaseString();

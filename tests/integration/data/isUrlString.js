@@ -1,17 +1,12 @@
-"use strict";
+import { generateIntegrationTestCase } from '../../helpers/generateFieldValidatorData';
 
-const {
-  generateIntegrationTestCase,
-} = require("../../helpers/generateFieldValidatorData");
+const errorMessage = 'should be an url string';
 
-const validatorName = "isUrlString";
-const errorMessage = "should be an url string";
+const generateTest = generateIntegrationTestCase({ validatorName: 'isUrlString' });
 
-const generateTest = generateIntegrationTestCase(validatorName);
-
-module.exports = [
-  generateTest(true, null, errorMessage),
-  generateTest("test.com", null, errorMessage),
-  generateTest("http://test.com"),
-  generateTest(undefined, null, errorMessage),
+export default [
+  generateTest({ valueToTest: true, errorMessage }),
+  generateTest({ valueToTest: 'test.com', errorMessage }),
+  generateTest({ valueToTest: 'http://test.com' }),
+  generateTest({ valueToTest: undefined, errorMessage })
 ];

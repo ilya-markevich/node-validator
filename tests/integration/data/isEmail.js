@@ -1,14 +1,9 @@
-"use strict";
+import { generateIntegrationTestCase } from '../../helpers/generateFieldValidatorData';
 
-const {
-  generateIntegrationTestCase,
-} = require("../../helpers/generateFieldValidatorData");
+const generateTest = generateIntegrationTestCase({ validatorName: 'isEmail' });
 
-const validatorName = "isEmail";
-const generateTest = generateIntegrationTestCase(validatorName);
-
-module.exports = [
-  generateTest("test@test.com"),
-  generateTest("test", null, "should be an email"),
-  generateTest(null, null, "should be an email"),
+export default [
+  generateTest({ valueToTest: 'test@test.com' }),
+  generateTest({ valueToTest: 'test', errorMessage: 'should be an email' }),
+  generateTest({ valueToTest: null, errorMessage: 'should be an email' })
 ];

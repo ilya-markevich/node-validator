@@ -1,7 +1,5 @@
-"use strict";
-
-const State = require("./state");
-const BaseFieldValidator = require("./fieldValidators/base");
+import State from './state';
+import BaseFieldValidator from './fieldValidators/base';
 
 class Validator {
   constructor(objToValidate) {
@@ -31,9 +29,7 @@ class Validator {
   }
 
   async getErrors() {
-    const statesInfo = await Promise.all(
-      this._states.map((state) => state.getInfo())
-    );
+    const statesInfo = await Promise.all(this._states.map((state) => state.getInfo()));
 
     return statesInfo
       .filter((stateInfo) => !stateInfo.isCorrect)
@@ -51,16 +47,15 @@ class Validator {
 
     Object.keys(Object(customValidators)).forEach((validatorName) => {
       const customValidator = customValidators[validatorName];
-      const defaultGetErrorMessage = () =>
-        `should pass ${validatorName} validation`;
+      const defaultGetErrorMessage = () => `should pass ${validatorName} validation`;
 
       const fieldValidator = Object.create(BaseFieldValidator.prototype, {
         name: { value: validatorName },
         defaultOpts: { value: customValidator.defaultOpts },
         execute: { value: customValidator.execute },
         getErrorMessage: {
-          value: customValidator.getErrorMessage || defaultGetErrorMessage,
-        },
+          value: customValidator.getErrorMessage || defaultGetErrorMessage
+        }
       });
 
       State.applyFieldValidator(fieldValidator);
@@ -68,17 +63,14 @@ class Validator {
   }
 
   static _checkCustomValidator(validator) {
-    if (typeof validator.execute !== "function") {
+    if (typeof validator.execute !== 'function') {
       throw new Error('"execute" property should be function.');
     }
 
-    if (
-      validator.getErrorMessage &&
-      typeof validator.getErrorMessage !== "function"
-    ) {
+    if (validator.getErrorMessage && typeof validator.getErrorMessage !== 'function') {
       throw new Error('"getErrorMessage" property should be function.');
     }
   }
 }
 
-module.exports = Validator;
+export default Validator;

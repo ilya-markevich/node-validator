@@ -1,10 +1,8 @@
-"use strict";
-
-const BaseFieldValidator = require("./base");
+import BaseFieldValidator from './base';
 
 class IsBase64String extends BaseFieldValidator {
   constructor() {
-    super("isBase64String");
+    super('isBase64String');
     this.notBase64Regexp = /[^A-Z0-9+=]/iu;
   }
 
@@ -12,27 +10,24 @@ class IsBase64String extends BaseFieldValidator {
     const base64LengthDivisor = 4;
 
     if (
-      typeof value !== "string" ||
+      typeof value !== 'string' ||
       value.length % base64LengthDivisor !== 0 ||
       this.notBase64Regexp.test(value)
     ) {
       return false;
     }
 
-    const firstPaddingChar = value.indexOf("=");
+    const firstPaddingChar = value.indexOf('=');
     const valueLength = value.length;
+    // eslint-disable-next-line no-magic-numbers
+    const isEqualInTheEnd = firstPaddingChar === valueLength - 2 && value[valueLength - 1] === '=';
 
-    return (
-      firstPaddingChar === -1 ||
-      firstPaddingChar === valueLength - 1 ||
-      // eslint-disable-next-line no-magic-numbers
-      (firstPaddingChar === valueLength - 2 && value[valueLength - 1] === "=")
-    );
+    return firstPaddingChar === -1 || firstPaddingChar === valueLength - 1 || isEqualInTheEnd;
   }
 
   getErrorMessage() {
-    return "should be a base64 string";
+    return 'should be a base64 string';
   }
 }
 
-module.exports = new IsBase64String();
+export default new IsBase64String();

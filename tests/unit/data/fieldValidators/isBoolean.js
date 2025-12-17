@@ -1,23 +1,21 @@
-"use strict";
-
-const {
+import {
   generateExecuteData,
-  generateErrorMessageData,
-} = require("../../../helpers/generateFieldValidatorData");
+  generateErrorMessageData
+} from '../../../helpers/generateFieldValidatorData';
 
 const executeTestCases = [
-  generateExecuteData(true, true, {}),
-  generateExecuteData(true, "true", { convert: true }),
-  generateExecuteData(false, "true", { convert: false }),
-  generateExecuteData(false, null, {}),
-  generateExecuteData(false, undefined, {}),
-  generateExecuteData(true, false, {}),
-  generateExecuteData(false, 0, {}),
+  generateExecuteData({ isCorrect: true, value: true, opts: {} }),
+  generateExecuteData({ isCorrect: true, value: 'true', opts: { convert: true } }),
+  generateExecuteData({ isCorrect: false, value: 'true', opts: { convert: false } }),
+  generateExecuteData({ isCorrect: false, value: null, opts: {} }),
+  generateExecuteData({ isCorrect: false, value: undefined, opts: {} }),
+  generateExecuteData({ isCorrect: true, value: false, opts: {} }),
+  generateExecuteData({ isCorrect: false, value: 0, opts: {} })
 ];
 
-const errorMessageTestCases = [generateErrorMessageData("should be a boolean")];
+const errorMessageTestCases = [generateErrorMessageData({ errorMessage: 'should be a boolean' })];
 
-module.exports = {
+export default {
   executeTestCases,
-  errorMessageTestCases,
+  errorMessageTestCases
 };

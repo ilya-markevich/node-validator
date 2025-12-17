@@ -1,16 +1,14 @@
-"use strict";
-
-const BaseFieldValidator = require("./base");
+import BaseFieldValidator from './base';
 
 const isValidRangeValue = (value) => Number.isInteger(value);
 
 class IsLength extends BaseFieldValidator {
   constructor() {
-    super("isLength", { min: 0 });
+    super('isLength', { min: 0 });
   }
 
   execute(value, opts) {
-    if (typeof value === "string") {
+    if (typeof value === 'string') {
       const stringLength = value.length;
 
       return this._getRangeExecution(opts, stringLength, isValidRangeValue);
@@ -26,4 +24,4 @@ class IsLength extends BaseFieldValidator {
   }
 }
 
-module.exports = new IsLength();
+export default new IsLength();

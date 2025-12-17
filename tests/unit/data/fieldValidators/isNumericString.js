@@ -1,23 +1,21 @@
-"use strict";
-
-const {
+import {
   generateExecuteData,
-  generateErrorMessageData,
-} = require("../../../helpers/generateFieldValidatorData");
+  generateErrorMessageData
+} from '../../../helpers/generateFieldValidatorData';
 
 const executeTestCases = [
-  generateExecuteData(false, ""),
-  generateExecuteData(false, " 123"),
-  generateExecuteData(true, "123"),
-  generateExecuteData(true, "0"),
-  generateExecuteData(false, 0),
+  generateExecuteData({ isCorrect: false, value: '' }),
+  generateExecuteData({ isCorrect: false, value: ' 123' }),
+  generateExecuteData({ isCorrect: true, value: '123' }),
+  generateExecuteData({ isCorrect: true, value: '0' }),
+  generateExecuteData({ isCorrect: false, value: 0 })
 ];
 
 const errorMessageTestCases = [
-  generateErrorMessageData("should be a string that contains only numbers"),
+  generateErrorMessageData({ errorMessage: 'should be a string that contains only numbers' })
 ];
 
-module.exports = {
+export default {
   executeTestCases,
-  errorMessageTestCases,
+  errorMessageTestCases
 };

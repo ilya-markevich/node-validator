@@ -1,25 +1,29 @@
-"use strict";
+import Validator from '../../../src/validator';
 
-const Validator = require("../../../src/validator");
+const convertToString = (value) => {
+  if (typeof value === 'object') {
+    return JSON.stringify(value);
+  }
 
-module.exports = (validator) => {
-  const testCases = require(`../data/${validator}`);
+  return String(value);
+};
 
+export default ({ validator, testCases }) => {
   describe(`${validator} integration`, () => {
     testCases.forEach((testCase) => {
       const { obj, validatorName, opts, errors } = testCase;
-      const optsString =
-        typeof opts === "object" ? JSON.stringify(opts) : String(opts);
+      const optsString = convertToString(opts);
+      const valueString = convertToString(obj.test);
 
       it(`should ${
-        errors.length === 0 ? "not " : ""
-      }get errors for test with options = ${optsString}`, async () => {
+        errors.length === 0 ? 'not ' : ''
+      }get errors for value = ${valueString} with options = ${optsString}`, async () => {
         const validatorObj = new Validator(obj);
 
-        validatorObj.property("test")[validatorName](opts);
+        validatorObj.property('test')[validatorName](opts);
 
-        (await validatorObj.hasErrors()).should.be.eql(errors.length > 0);
-        (await validatorObj.getErrors()).should.be.eql(errors);
+        expect(await validatorObj.hasErrors()).toBe(errors.length > 0);
+        expect(await validatorObj.getErrors()).toEqual(errors);
       });
     });
   });

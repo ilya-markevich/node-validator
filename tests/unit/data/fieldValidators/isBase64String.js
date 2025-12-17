@@ -1,26 +1,24 @@
-"use strict";
-
-const {
+import {
   generateExecuteData,
-  generateErrorMessageData,
-} = require("../../../helpers/generateFieldValidatorData");
+  generateErrorMessageData
+} from '../../../helpers/generateFieldValidatorData';
 
 const executeTestCases = [
-  generateExecuteData(false, "tests"),
-  generateExecuteData(true, "YQ=="),
-  generateExecuteData(true, "PT0tLQ=="),
-  generateExecuteData(
-    true,
-    "YXNsZmtoYXNsZGZramhhbGRoZmphbGRmanNobGFkaGZqc2FzZGZxd2VycXdl"
-  ),
-  generateExecuteData(false, 0),
+  generateExecuteData({ isCorrect: false, value: 'tests' }),
+  generateExecuteData({ isCorrect: true, value: 'YQ==' }),
+  generateExecuteData({ isCorrect: true, value: 'PT0tLQ==' }),
+  generateExecuteData({
+    isCorrect: true,
+    value: 'YXNsZmtoYXNsZGZramhhbGRoZmphbGRmanNobGFkaGZqc2FzZGZxd2VycXdl'
+  }),
+  generateExecuteData({ isCorrect: false, value: 0 })
 ];
 
 const errorMessageTestCases = [
-  generateErrorMessageData("should be a base64 string"),
+  generateErrorMessageData({ errorMessage: 'should be a base64 string' })
 ];
 
-module.exports = {
+export default {
   executeTestCases,
-  errorMessageTestCases,
+  errorMessageTestCases
 };

@@ -1,17 +1,14 @@
-"use strict";
+import { generateIntegrationTestCase } from '../../helpers/generateFieldValidatorData';
 
-const {
-  generateIntegrationTestCase,
-} = require("../../helpers/generateFieldValidatorData");
+const generateTest = generateIntegrationTestCase({ validatorName: 'isFloat' });
 
-/* eslint no-magic-numbers: "off" */
-
-const validatorName = "isFloat";
-const generateTest = generateIntegrationTestCase(validatorName);
-
-module.exports = [
-  generateTest(1.2),
-  generateTest("1.2"),
-  generateTest("test", null, "should be a float more than 0"),
-  generateTest(1.2, { min: 2, max: 3 }, "should be a float between 2 and 3"),
+export default [
+  generateTest({ valueToTest: 1.2 }),
+  generateTest({ valueToTest: '1.2' }),
+  generateTest({ valueToTest: 'test', errorMessage: 'should be a float more than 0' }),
+  generateTest({
+    valueToTest: 1.2,
+    opts: { min: 2, max: 3 },
+    errorMessage: 'should be a float between 2 and 3'
+  })
 ];

@@ -1,23 +1,22 @@
-"use strict";
-
-const BaseFieldValidator = require("./base");
+import BaseFieldValidator from './base';
 
 class IsDate extends BaseFieldValidator {
   constructor() {
-    super("isDate", {});
+    super('isDate', {});
   }
 
   execute(value, opts) {
     const { before, after } = opts;
-    const isDate = new Date(value).toString() !== "Invalid Date";
+    const isDate = new Date(value).toString() !== 'Invalid Date';
+    const isDateString = typeof value === 'string' && isDate;
 
-    if (value instanceof Date || (typeof value === "string" && isDate)) {
+    if (value instanceof Date || isDateString) {
       const dateValue = new Date(value);
 
       return this._getRangeExecution(
         {
           min: after && new Date(after),
-          max: before && new Date(before),
+          max: before && new Date(before)
         },
         dateValue
       );
@@ -28,13 +27,10 @@ class IsDate extends BaseFieldValidator {
 
   getErrorMessage(opts) {
     const { before, after } = opts;
-    const rangeMessage = this._getRangeErrorMessage({
-      min: after,
-      max: before,
-    });
+    const rangeMessage = this._getRangeErrorMessage({ min: after, max: before });
 
     return `should be a date${rangeMessage}`;
   }
 }
 
-module.exports = new IsDate();
+export default new IsDate();

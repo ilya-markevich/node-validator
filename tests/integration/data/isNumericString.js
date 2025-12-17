@@ -1,17 +1,12 @@
-"use strict";
+import { generateIntegrationTestCase } from '../../helpers/generateFieldValidatorData';
 
-const {
-  generateIntegrationTestCase,
-} = require("../../helpers/generateFieldValidatorData");
+const errorMessage = 'should be a string that contains only numbers';
 
-const validatorName = "isNumericString";
-const errorMessage = "should be a string that contains only numbers";
+const generateTest = generateIntegrationTestCase({ validatorName: 'isNumericString' });
 
-const generateTest = generateIntegrationTestCase(validatorName);
-
-module.exports = [
-  generateTest(undefined, null, errorMessage),
-  generateTest("true", null, errorMessage),
-  generateTest("0123"),
-  generateTest("", null, errorMessage),
+export default [
+  generateTest({ valueToTest: undefined, errorMessage }),
+  generateTest({ valueToTest: 'true', errorMessage }),
+  generateTest({ valueToTest: '0123' }),
+  generateTest({ valueToTest: '', errorMessage })
 ];

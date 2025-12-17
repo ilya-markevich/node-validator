@@ -1,19 +1,17 @@
-"use strict";
-
-const BaseFieldValidator = require("./base");
+import BaseFieldValidator from './base';
 
 class IsString extends BaseFieldValidator {
   constructor() {
-    super("isString");
+    super('isString');
   }
 
   execute(value) {
-    return typeof value === "string";
+    return typeof value === 'string';
   }
 
   getErrorMessage() {
-    return "should be a string";
+    return 'should be a string';
   }
 }
 
-module.exports = new IsString();
+export default new IsString();

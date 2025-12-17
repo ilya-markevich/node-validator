@@ -1,22 +1,20 @@
-"use strict";
-
-const {
+import {
   generateExecuteData,
-  generateErrorMessageData,
-} = require("../../../helpers/generateFieldValidatorData");
+  generateErrorMessageData
+} from '../../../helpers/generateFieldValidatorData';
 
 const executeTestCases = [
-  generateExecuteData(true, "test"),
-  generateExecuteData(false, ""),
-  generateExecuteData(false, null),
-  generateExecuteData(false, undefined),
-  generateExecuteData(true, {}),
-  generateExecuteData(true, "0"),
+  generateExecuteData({ isCorrect: true, value: 'test' }),
+  generateExecuteData({ isCorrect: false, value: '' }),
+  generateExecuteData({ isCorrect: false, value: null }),
+  generateExecuteData({ isCorrect: false, value: undefined }),
+  generateExecuteData({ isCorrect: true, value: {} }),
+  generateExecuteData({ isCorrect: true, value: '0' })
 ];
 
-const errorMessageTestCases = [generateErrorMessageData("should be not empty")];
+const errorMessageTestCases = [generateErrorMessageData({ errorMessage: 'should be not empty' })];
 
-module.exports = {
+export default {
   executeTestCases,
-  errorMessageTestCases,
+  errorMessageTestCases
 };
