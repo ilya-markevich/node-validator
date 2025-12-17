@@ -8,3 +8,6 @@ npm-debug.log
 .github
 scripts
 jest.config.mjs
+babel.config.mjs
+eslint.config.mjs
+prettier.config.mjs
