@@ -1,5 +1,5 @@
-const BaseFieldValidator = require('./base');
-const { isIP, isIPv4, isIPv6 } = require('is-ip');
+import BaseFieldValidator from './base';
+import { isIP, isIPv4, isIPv6 } from 'is-ip';
 
 class IsIpString extends BaseFieldValidator {
   constructor() {
@@ -38,4 +38,4 @@ class IsIpString extends BaseFieldValidator {
   }
 }
 
-module.exports = new IsIpString();
+export default new IsIpString();

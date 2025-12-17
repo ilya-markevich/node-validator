@@ -1,5 +1,3 @@
-"use strict";
-
 const DEFAULT_CONDITION_FN = (value) => value;
 
 class BaseFieldValidator {
@@ -24,7 +22,7 @@ class BaseFieldValidator {
   _getOptions(opts) {
     const { defaultOpts } = this;
     const type = Object.prototype.toString.call(opts).toLowerCase();
-    const objTypes = ["[object object]"];
+    const objTypes = ['[object object]'];
 
     if (objTypes.includes(type) && !Array.isArray(defaultOpts)) {
       return { ...defaultOpts, ...opts };
@@ -58,8 +56,8 @@ class BaseFieldValidator {
       return ` less than ${max}`;
     }
 
-    return "";
+    return '';
   }
 }
 
-module.exports = BaseFieldValidator;
+export default BaseFieldValidator;

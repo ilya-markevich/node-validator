@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/ilya-markevich/node-validator#readme",
   "scripts": {
-    "eslint": "eslint src/ tests/",
+    "lint": "eslint src/ tests/",
     "test": "jest",
     "coverage": "jest --coverage",
     "test:typescript": "tsc"

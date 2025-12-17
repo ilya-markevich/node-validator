@@ -1,11 +1,9 @@
-"use strict";
-
-const isEmail = require("isemail");
-const BaseFieldValidator = require("./base");
+import isEmail from 'isemail';
+import BaseFieldValidator from './base';
 
 class IsEmail extends BaseFieldValidator {
   constructor() {
-    super("isEmail");
+    super('isEmail');
   }
 
   execute(value) {
@@ -13,8 +11,8 @@ class IsEmail extends BaseFieldValidator {
   }
 
   getErrorMessage() {
-    return "should be an email";
+    return 'should be an email';
   }
 }
 
-module.exports = new IsEmail();
+export default new IsEmail();

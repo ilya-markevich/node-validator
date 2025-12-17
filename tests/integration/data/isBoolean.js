@@ -6,7 +6,9 @@ const generateTest = generateIntegrationTestCase({ validatorName: 'isBoolean' })
 
 export default [
   generateTest({ valueToTest: true }),
+  generateTest({ valueToTest: false }),
   generateTest({ valueToTest: 'true' }),
+  generateTest({ valueToTest: 'false' }),
   generateTest({ valueToTest: 'test', errorMessage }),
   generateTest({ valueToTest: null, errorMessage })
 ];

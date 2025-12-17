@@ -1,27 +1,22 @@
-"use strict";
-
-const BaseFieldValidator = require("./base");
+import BaseFieldValidator from './base';
 
 const isValidRangeValue = (value) => Number.isInteger(value);
 
 class IsNumber extends BaseFieldValidator {
   constructor() {
-    super("isInteger", { min: 0, convert: true });
+    super('isInteger', { min: 0, convert: true });
   }
 
-  _isStringIsInteger(str) {
+  _isStringInteger(str) {
     const number = Math.floor(Number(str));
 
     return String(number) === str;
   }
 
   execute(value, opts) {
-    if (
-      Number.isInteger(value) ||
-      (typeof value === "string" &&
-        opts.convert &&
-        this._isStringIsInteger(value))
-    ) {
+    const isNumber = typeof value === 'string' && opts.convert && this._isStringInteger(value);
+
+    if (Number.isInteger(value) || isNumber) {
       return this._getRangeExecution(opts, value, isValidRangeValue);
     }
 
@@ -35,4 +30,4 @@ class IsNumber extends BaseFieldValidator {
   }
 }
 
-module.exports = new IsNumber();
+export default new IsNumber();

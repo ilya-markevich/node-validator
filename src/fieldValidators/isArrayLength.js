@@ -1,12 +1,10 @@
-"use strict";
-
-const BaseFieldValidator = require("./base");
+import BaseFieldValidator from './base';
 
 const isValidRangeValue = (value) => Number.isInteger(value);
 
 class IsArrayLength extends BaseFieldValidator {
   constructor() {
-    super("isArrayLength", { min: 0 });
+    super('isArrayLength', { min: 0 });
   }
 
   execute(value, opts) {
@@ -26,4 +24,4 @@ class IsArrayLength extends BaseFieldValidator {
   }
 }
 
-module.exports = new IsArrayLength();
+export default new IsArrayLength();

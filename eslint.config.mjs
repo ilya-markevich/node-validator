@@ -9,5 +9,12 @@ export default [
       'max-lines-per-function': 'off',
       'max-nested-callbacks': 'off'
     }
+  },
+  {
+    files: ['src/**/*.js'],
+    rules: {
+      'no-extra-parens': 'off',
+      'space-before-function-paren': 'off'
+    }
   }
 ];
