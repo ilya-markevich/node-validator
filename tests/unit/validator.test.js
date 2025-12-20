@@ -1,74 +1,62 @@
 import Validator from '../../src/validator';
-import testData from './data/validator';
 
 describe('Validator', () => {
   describe('Initial state', () => {
-    it('should set initial state', () => {
-      const { objectToValidate, initialState } = testData;
-      const validator = new Validator(objectToValidate);
+    it('should set initial state', async () => {
+      const objToValidate = { data: 'test data', name: 'test name' };
+      const validator = new Validator(objToValidate);
 
-      expect(validator).toEqual(initialState);
-    });
-  });
-
-  describe('#getValidationObject', () => {
-    it('should get validation object', () => {
-      const { objectToValidate } = testData;
-      const validator = new Validator(objectToValidate);
-
-      expect(validator.getValidationObject()).toEqual(objectToValidate);
-    });
-  });
-
-  describe('#property', () => {
-    it('should create state for property', () => {
-      const { objectToValidate, path, mockStateReturn } = testData;
-      const validator = new Validator(objectToValidate);
-
-      validator.StateConstructor = jest.fn().mockReturnValue(mockStateReturn);
-
-      expect(validator.property(path)).toEqual(mockStateReturn);
-      expect(validator.StateConstructor).toHaveBeenCalledWith(path, objectToValidate);
-    });
-  });
-
-  describe('#hasErrors', () => {
-    it('should return that validator has errors', async () => {
-      const { objectToValidate, stateWithError } = testData;
-      const validator = new Validator(objectToValidate);
-
-      validator._states.push(stateWithError);
-
-      expect(await validator.hasErrors()).toBe(true);
-    });
-
-    it('should return that validator has no errors', async () => {
-      const { objectToValidate, stateWithoutError } = testData;
-      const validator = new Validator(objectToValidate);
-
-      validator._states.push(stateWithoutError);
-
+      expect(validator.getValidationObject()).toEqual(objToValidate);
+      expect(await validator.getErrors()).toEqual([]);
       expect(await validator.hasErrors()).toBe(false);
     });
   });
 
-  describe('#getErrors', () => {
-    it('should return errors', async () => {
-      const { objectToValidate, stateWithError, validatorErrors } = testData;
-      const validator = new Validator(objectToValidate);
+  describe('#property', () => {
+    it('should ignore invalid array path', async () => {
+      const validator = new Validator({ a: { b: null } });
 
-      validator._states.push(stateWithError);
+      validator.property('a[].b').isNotEmpty();
+      expect(await validator.hasErrors()).toBe(false);
+    });
+  });
 
-      expect(await validator.getErrors()).toEqual(validatorErrors);
+  describe('#optional', () => {
+    it('should apply optional option for null value', async () => {
+      const validator = new Validator({ a: null });
+
+      validator.property('a').optional().isInteger();
+      expect(await validator.hasErrors()).toBe(false);
     });
 
-    it('should not return errors', async () => {
-      const { objectToValidate, stateWithoutError } = testData;
-      const validator = new Validator(objectToValidate);
+    it('should apply optional option for undefined value', async () => {
+      const validator = new Validator({});
 
-      validator._states.push(stateWithoutError);
+      validator.property('a').optional().isInteger();
+      expect(await validator.hasErrors()).toBe(false);
+    });
 
-      expect(await validator.getErrors()).toHaveLength(0);
+    it('should apply optional option for array value', async () => {
+      const validator = new Validator({ a: [{ b: null }] });
+
+      validator.property('a[].b').optional().isInteger();
+      expect(await validator.hasErrors()).toBe(false);
+    });
+  });
+
+  describe('#withMessage', () => {
+    it('should apply custom message', async () => {
+      const validator = new Validator({ a: '' });
+
+      validator.property('a').isNotEmpty().withMessage('invalid');
+      expect(await validator.getErrors()).toMatchObject([{ errorMessage: 'invalid' }]);
+    });
+
+    it('should apply custom message for array value', async () => {
+      const validator = new Validator({ a: [{ b: null }] });
+
+      validator.property('a[].b').isNotEmpty().withMessage('invalid');
+      expect(await validator.getErrors()).toMatchObject([{ errorMessage: 'invalid' }]);
     });
   });
 });

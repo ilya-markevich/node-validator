@@ -59,7 +59,7 @@ interface State {
 
   isMatch(matchRegexp: RegExp): State;
 
-  isNotEmpty(): State;
+  isNotEmpty(options?: { trim?: boolean }): State;
 
   isNumericString(): State;
 

@@ -2,11 +2,15 @@ import BaseFieldValidator from './base';
 
 class NotEmpty extends BaseFieldValidator {
   constructor() {
-    super('isNotEmpty');
+    super('isNotEmpty', { trim: false });
   }
 
-  execute(value) {
+  execute(value, opts) {
     if (typeof value === 'string') {
+      if (opts?.trim) {
+        return value.trim().length > 0;
+      }
+
       return value.length > 0;
     }
 

@@ -39,7 +39,9 @@ const Validator = require('dee-validator');
 const validator = new Validator({
     field1: 'test',
     field2: 10,
-    field3: true
+    field3: true,
+    field4: [1, 'test', 3],
+    field5: [{ a: 1 }, { a: null }]
 });
 
 validator.property('field1').isNotEmpty().isEqual('1');
@@ -51,11 +53,17 @@ validator.property('field2').isNotEmpty().isInteger({
 
 validator.property('field3').isNotEmpty().isString().withMessage('field3 should be a special string.');
 
+validator.property('field4[]').isNotEmpty().isInteger().withMessage('field4 items should be integers.');
+
+validator.property('field5[].a').isNotEmpty().isInteger().withMessage('field5.a should be integers.');
+
 await validator.hasErrors(); // true
 await validator.getErrors();
 // [
 //    { path: 'field1', value: 'test', errorMessage: 'field1 should be equal 1' },
 //    { path: 'field3', value: true, errorMessage: 'field3 should be a special string.' }
+//    { path: 'field4[1]', value: 'test', errorMessage: 'field4 items should be integers.' }
+//    { path: 'field5[1].a', value: null, errorMessage: 'field5.a should be integers.' }
 // ]
 ```
 
@@ -154,7 +162,7 @@ If `convert = true` string values like 'true'/'false' are accepted as booleans.
 `min` and `max` options set acceptable range for the string length.
 - **isLowerCaseString()** - check if all letters in a string are lowercase.
 - **isMatch(regexp)** - check if a string value is matched to `regexp`.
-- **isNotEmpty()** - check if a string is not empty.
+- **isNotEmpty(opts)** - check if a string is not empty. `opts` is an object which defaults to `{ trim: false }`
 - **isNumericString()** - check if a string contains only numbers.
 - **isString()** - check if a value is a string.
 - **isUpperCaseString()** - check if all letters in a string are uppercase.

@@ -1,23 +1,27 @@
-import State from './state';
+import FieldState from './fieldState';
+import ArrayFieldState from './arrayFieldState';
 import BaseFieldValidator from './fieldValidators/base';
+import { ARRAY_SELECTOR, DEFAULT_VALIDATORS } from './constants';
 
 class Validator {
-  constructor(objToValidate) {
-    this._objToValidate = objToValidate;
-    this._states = [];
+  #objToValidate;
 
-    this.StateConstructor = State;
+  #states;
+
+  constructor(objToValidate) {
+    this.#objToValidate = objToValidate;
+    this.#states = [];
   }
 
   getValidationObject() {
-    return this._objToValidate;
+    return this.#objToValidate;
   }
 
   property(path) {
-    const { _objToValidate, _states, StateConstructor } = this;
-    const state = new StateConstructor(path, _objToValidate);
+    const State = path.includes(ARRAY_SELECTOR) ? ArrayFieldState : FieldState;
+    const state = new State(path, this.#objToValidate);
 
-    _states.push(state);
+    this.#states.push(state);
 
     return state;
   }
@@ -29,9 +33,10 @@ class Validator {
   }
 
   async getErrors() {
-    const statesInfo = await Promise.all(this._states.map((state) => state.getInfo()));
+    const statesInfo = await Promise.all(this.#states.map((state) => state.getInfo()));
 
     return statesInfo
+      .flat()
       .filter((stateInfo) => !stateInfo.isCorrect)
       .map((stateInfo) => {
         delete stateInfo.isCorrect;
@@ -42,7 +47,7 @@ class Validator {
 
   static extend(customValidators) {
     Object.keys(Object(customValidators)).forEach((validatorName) =>
-      Validator._checkCustomValidator(customValidators[validatorName])
+      Validator.#checkCustomValidator(customValidators[validatorName])
     );
 
     Object.keys(Object(customValidators)).forEach((validatorName) => {
@@ -58,11 +63,12 @@ class Validator {
         }
       });
 
-      State.applyFieldValidator(fieldValidator);
+      FieldState.applyFieldValidator(fieldValidator);
+      ArrayFieldState.applyFieldValidator(fieldValidator);
     });
   }
 
-  static _checkCustomValidator(validator) {
+  static #checkCustomValidator(validator) {
     if (typeof validator.execute !== 'function') {
       throw new Error('"execute" property should be function.');
     }
@@ -72,5 +78,10 @@ class Validator {
     }
   }
 }
+
+DEFAULT_VALIDATORS.forEach((fieldValidator) => {
+  FieldState.applyFieldValidator(fieldValidator);
+  ArrayFieldState.applyFieldValidator(fieldValidator);
+});
 
 export default Validator;
